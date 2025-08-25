@@ -1,0 +1,271 @@
+.logo-1{
+    height:50px;
+    width: 160px;
+}
+.logo-2{
+    height:50px;
+    width: 160px;
+}
+
+.bouton-dispo{
+    display: inline-block;
+    font-family: var(--title-font);
+    text-align: center;
+    background: #ffb400;
+    color: #860000;
+    outline: 0;
+    font-weight: 400;
+    text-decoration: none;
+    padding: 0px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    cursor: default; 
+}
+.bouton-disponible{
+    display: inline-block;
+    font-family: var(--title-font);
+    text-align: center;
+    background: #ffb400;
+    color: #ffffff;
+    outline: 0;
+    font-weight: 400;
+    text-decoration: none;
+    padding: 0px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    cursor: default; 
+}
+.bouton-disponible:hover{
+    
+    background: #ffb400;
+    color: #ffffff;
+    
+}
+.bouton-detail:hover{
+    
+    background: #ffb400;
+    color: #ffffff;
+    
+}
+
+.bouton-detail{
+    display: inline-block;
+    font-family: var(--title-font);
+    text-align: center;
+    background: #ffb400;
+    color: #ffffff;
+    outline: 0;
+    font-weight: 800;
+    text-decoration: none;
+    padding: 4px 30px 4px 30px;
+    font-size: 13px;
+    border: none;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+.dooo img {
+    width: 13px;   /* ajuste comme tu veux */
+    height: auto;  /* garde les proportions */
+    margin-right: 5px; /* optionnel : petit espace entre l’icône et le texte */
+}
+
+.dooo {
+    display: inline-flex;
+    align-items: center; /* centre verticalement texte + icône */
+    gap: 5px; /* espace entre l’icône et le texte */
+    font-size: 13px;
+}
+
+.bouton-voitures {
+        display: flex;
+        justify-content: center;
+      padding: 15px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #860000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+      width: 400px;
+    }
+
+    .bouton-voitures:hover {
+      background-color: #a00000; /* Un rouge un peu plus clair au survol */
+      color: #fff;
+      }
+
+      .yy{
+        display: flex;
+        justify-content: center;
+      }
+
+.popover-recap-box {
+    font-family: 'Outfit', serif; /* Correction ici : 'Outfit serif' → 'Outfit', serif */
+    background-color: #ffb400;
+    color: #860000;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+.popover-recap-box .amount {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.popover-recap-box .label {
+    font-size: 0.9em;
+}
+
+.popover-recap-box .tva {
+    font-size: 0.8em;
+}
+
+.dura-card {
+    display: block;
+    background-color: white;
+    border: 1px solid #9a9696;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    color: #000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+}
+
+.dura-card .icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + .dura-card {
+    background-color: #860000; /* Rouge vif */
+    color: white;
+    border-color: #860000;
+}
+
+input[type="radio"]:checked + .dura-card .icon,
+input[type="radio"]:checked + .dura-card h6,
+input[type="radio"]:checked + .dura-card p {
+    color: white;
+}
+
+.dura-card h6 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.dura-card p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+@media (max-width: 768px) {
+    .dura-card {
+   width: 100%;
+}
+    .radio-img {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .dura-card {
+        padding: 16px;
+    }
+}
+
+
+
+.reservation-option {
+    display: block;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.reservation-option .option-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: inherit;
+}
+
+.reservation-option .option-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.reservation-option .option-price {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Style sélectionné */
+.reservation-option.selected {
+    background-color: #e53935;
+    color: white;
+    border-color: #e53935;
+}
+
+.reservation-option.selected .option-icon,
+.reservation-option.selected .option-title,
+.reservation-option.selected .option-price {
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reservation-option {
+        padding: 16px;
+    }
+}
+
+.custom-checkbo {
+  border: 2px solid #1f1b1b; /* contour noir */
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.custom-checkbo:checked {
+  background-color: #860000;
+  border: 2px solid #1f1b1b; /* garde le contour noir */
+}
+
+.id-colo {
+    color: var(--secondary-color);
+}
+
+.iti__flag {
+    display: block !important;
+    width: 20px !important;
+    height: 15px !important;
+    background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/img/flags.png") !important;
+    background-size: 5632px 15px !important;
+}

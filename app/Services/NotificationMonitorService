@@ -1,0 +1,248 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Reservation;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+class NotificationMonitorService
+{
+    /**
+     * Obtient les statistiques des rappels SMS
+     */
+    public function getSmsStats(): array
+    {
+        $today = Carbon::today();
+        $thisWeek = Carbon::now()->startOfWeek();
+        $thisMonth = Carbon::now()->startOfMonth();
+
+        return [
+            'today' => [
+                'one_hour_sent' => $this->countRemindersSent('one_hour_reminder_sent_at', $today),
+                'end_sent' => $this->countRemindersSent('end_reminder_sent_at', $today),
+            ],
+            'this_week' => [
+                'one_hour_sent' => $this->countRemindersSent('one_hour_reminder_sent_at', $thisWeek),
+                'end_sent' => $this->countRemindersSent('end_reminder_sent_at', $thisWeek),
+            ],
+            'this_month' => [
+                'one_hour_sent' => $this->countRemindersSent('one_hour_reminder_sent_at', $thisMonth),
+                'end_sent' => $this->countRemindersSent('end_reminder_sent_at', $thisMonth),
+            ],
+            'pending' => [
+                'one_hour_pending' => $this->countPendingReminders('one_hour'),
+                'end_pending' => $this->countPendingReminders('end'),
+            ]
+        ];
+    }
+
+    /**
+     * Compte les rappels envoyés depuis une date
+     */
+    private function countRemindersSent(string $field, Carbon $since): int
+    {
+        return Reservation::whereNotNull($field)
+            ->where($field, '>=', $since)
+            ->count();
+    }
+
+    /**
+     * Compte les rappels en attente
+     */
+    private function countPendingReminders(string $type): int
+    {
+        $query = Reservation::where('status', 'active');
+
+        if ($type === 'one_hour') {
+            return $query->where('one_hour_reminder_sent', false)
+                        ->where('end_date', '<=', now()->addHour())
+                        ->where('end_date', '>', now())
+                        ->count();
+        } else {
+            return $query->where('end_reminder_sent', false)
+                        ->where('end_date', '<=', now())
+                        ->count();
+        }
+    }
+
+    /**
+     * Obtient la liste des prochains rappels à envoyer
+     */
+    public function getUpcomingReminders(): array
+    {
+        $oneHourReminders = Reservation::needingOneHourReminder()
+            ->with(['user', 'car'])
+            ->orderBy('end_date')
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'id' => $reservation->id,
+                    'type' => 'one_hour',
+                    'user_name' => $reservation->user->name,
+                    'user_phone' => $reservation->user->phone,
+                    'car_name' => $reservation->car->name,
+                    'end_date' => $reservation->end_date,
+                    'minutes_until_end' => now()->diffInMinutes($reservation->end_date),
+                ];
+            });
+
+        $endReminders = Reservation::needingEndReminder()
+            ->with(['user', 'car'])
+            ->orderBy('end_date')
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'id' => $reservation->id,
+                    'type' => 'end',
+                    'user_name' => $reservation->user->name,
+                    'user_phone' => $reservation->user->phone,
+                    'car_name' => $reservation->car->name,
+                    'end_date' => $reservation->end_date,
+                    'minutes_overdue' => $reservation->end_date->diffInMinutes(now()),
+                ];
+            });
+
+        return [
+            'one_hour_reminders' => $oneHourReminders->toArray(),
+            'end_reminders' => $endReminders->toArray(),
+        ];
+    }
+
+    /**
+     * Obtient l'historique des rappels récents
+     */
+    public function getRecentReminders(int $limit = 20): array
+    {
+        $oneHourReminders = Reservation::whereNotNull('one_hour_reminder_sent_at')
+            ->with(['user', 'car'])
+            ->orderBy('one_hour_reminder_sent_at', 'desc')
+            ->limit($limit)
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'id' => $reservation->id,
+                    'type' => 'one_hour',
+                    'user_name' => $reservation->user->name,
+                    'user_phone' => $reservation->user->phone,
+                    'car_name' => $reservation->car->name,
+                    'sent_at' => $reservation->one_hour_reminder_sent_at,
+                    'end_date' => $reservation->end_date,
+                ];
+            });
+
+        $endReminders = Reservation::whereNotNull('end_reminder_sent_at')
+            ->with(['user', 'car'])
+            ->orderBy('end_reminder_sent_at', 'desc')
+            ->limit($limit)
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'id' => $reservation->id,
+                    'type' => 'end',
+                    'user_name' => $reservation->user->name,
+                    'user_phone' => $reservation->user->phone,
+                    'car_name' => $reservation->car->name,
+                    'sent_at' => $reservation->end_reminder_sent_at,
+                    'end_date' => $reservation->end_date,
+                ];
+            });
+
+        return $oneHourReminders->concat($endReminders)
+            ->sortByDesc('sent_at')
+            ->take($limit)
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Vérifie la santé du système de notifications
+     */
+    public function getSystemHealth(): array
+    {
+        $queueStats = $this->getQueueStats();
+        $configHealth = $this->checkConfiguration();
+        
+        return [
+            'overall_status' => $this->determineOverallStatus($queueStats, $configHealth),
+            'queue_stats' => $queueStats,
+            'configuration' => $configHealth,
+            'last_check' => now(),
+        ];
+    }
+
+    /**
+     * Statistiques des queues
+     */
+    private function getQueueStats(): array
+    {
+        try {
+            $pendingJobs = DB::table('jobs')->where('queue', 'sms')->count();
+            $failedJobs = DB::table('failed_jobs')->count();
+            
+            return [
+                'pending_jobs' => $pendingJobs,
+                'failed_jobs' => $failedJobs,
+                'status' => $failedJobs > 10 ? 'warning' : 'healthy'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'pending_jobs' => 'unknown',
+                'failed_jobs' => 'unknown',
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Vérification de la configuration
+     */
+    private function checkConfiguration(): array
+    {
+        $checks = [
+            'twilio_configured' => !empty(config('services.twilio.sid')) && !empty(config('services.twilio.auth_token')),
+            'phone_number_set' => !empty(config('services.twilio.phone_number')),
+            'queue_configured' => config('queue.default') !== 'sync',
+            'jobs_table_exists' => $this->checkJobsTableExists(),
+        ];
+
+        $allPassed = array_reduce($checks, function ($carry, $check) {
+            return $carry && $check;
+        }, true);
+
+        return [
+            'checks' => $checks,
+            'all_passed' => $allPassed,
+            'status' => $allPassed ? 'healthy' : 'error'
+        ];
+    }
+
+    /**
+     * Vérifie si la table jobs existe
+     */
+    private function checkJobsTableExists(): bool
+    {
+        try {
+            return DB::getSchemaBuilder()->hasTable('jobs');
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Détermine le statut global du système
+     */
+    private function determineOverallStatus(array $queueStats, array $configHealth): string
+    {
+        if (!$configHealth['all_passed']) {
+            return 'error';
+        }
+
+        if ($queueStats['status'] === 'warning') {
+            return 'warning';
+        }
+
+        return 'healthy';
+    }
+}
