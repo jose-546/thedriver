@@ -914,12 +914,8 @@
                                                                 <!-- Informations de la voiture -->
                                                             
                                                                    
-                                                                    <div class="form-control mb-4" style="display: flex; align-items: center; gap: 10px; padding: 10px 10px;">
-                                                                        <img src="{{ asset('storage/' . $car->image) }}" 
-                                                                                        alt="{{ $car->name }}" 
-                                                                                        style="width: 100px; height: auto; border-radius: 8px;">   
-                                                                                                                            
-                                                                        <h5 style="margin: 0;">{{ $car->getFullName() }}</h5>
+                                                                    <div class="form-control mb-4" style="display: flex; align-items: center; padding: 10px 10px;">
+                                                                        <h3 style="margin: 0;">{{ $car->getFullName() }}</h3>
                                                                             
                                                                     </div>
                                                                 
@@ -978,7 +974,7 @@
                                                                         
                                                                             <div class="row mb-3">
                                                                                 <div class="col-lg-12">
-                                                                                    <div class="alert alert-info">
+                                                                                    <div class="joe">
                                                                                         <i class="fas fa-info-circle me-2"></i>
                                                                                         <strong>Durée calculée :</strong> <span id="calculated_duration">Sélectionnez vos dates</span>
                                                                                     </div>
@@ -992,7 +988,7 @@
                                                                     </div>
 
                                                                     <!-- Informations de Localisation -->
-                                                                    <h5><i class="fas fa-map-marker-alt me-2"></i>Votre position (Où êtes-vous ?)</h5>
+                                                                    <h5>Votre position (Où êtes-vous ?)</h5>
                                                                     <div class="row g-4 mb-4">
                                                                         <div class="col-lg-12">
                                                                             <div class="field-set">
@@ -1007,7 +1003,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <h5><i class="fas fa-map me-2"></i>Zone de déplacement</h5>
+                                                                    <h5>Zone de déplacement</h5>
                                                                     <div class="row g-4 mb-4">
                                                                         <div class="col-lg-12">
                                                                             <div class="field-set">
@@ -1171,7 +1167,7 @@
                                                                 </div>
                                                             </div>
                                                             <button type="button" id="submitBtn" class="btn-main btn-fullwidth" disabled>
-                                                                <i class="fas fa-credit-card me-2"></i>Procéder au paiement
+                                                              Procéder au paiement
                                                             </button>
 
                                                             <!-- Messages de succès et d'erreur -->

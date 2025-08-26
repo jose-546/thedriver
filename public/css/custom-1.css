@@ -269,3 +269,32 @@ input[type="radio"]:checked + .dura-card p {
     background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/img/flags.png") !important;
     background-size: 5632px 15px !important;
 }
+
+
+.hee1 {
+    font-size: 35px;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    color: #000;
+    line-height: 52px;
+    font-weight: 600;
+}
+.ha1 {
+    font-size: 14px;
+    font-weight: 400;
+}
+.hb1 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.joe{
+   background-color: #ffb400;
+   color: white;
+   padding: 10px 30px;
+   border-radius: 30px;
+   margin-top: 10px;
+}
+::placeholder{
+font-size: 14px;
+}

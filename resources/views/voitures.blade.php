@@ -20,599 +20,9 @@
     <link href="{{ asset('css/coloring.css') }}" rel="stylesheet" type="text/css">
     <!-- color scheme -->
     <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css">
-<style>
-    /* Variables CSS pour cohérence */
-    :root {
+        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-        --secondary-color: #64748b;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --danger-color: #ef4444;
-        --purple-color: #8b5cf6;
-        --gray-50: #f8fafc;
-        --gray-100: #f1f5f9;
-        --gray-200: #e2e8f0;
-        --gray-300: #cbd5e1;
-        --gray-400: #94a3b8;
-        --gray-500: #64748b;
-        --gray-600: #475569;
-        --gray-700: #334155;
-        --gray-800: #1e293b;
-        --gray-900: #0f172a;
-        --white: #ffffff;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        --border-radius: 0.75rem;
-        --border-radius-sm: 0.5rem;
-        --border-radius-lg: 1rem;
-    }
-
-    /* Layout principal */
-    .dashboard-layout {
-        display: flex;
-        min-height: 100vh;
-        background-color: var(--gray-50);
-    }
-
-
-    /* Main content */
-    .dashboard-main {
-        flex: 1;
-        margin-left: 280px;
-        padding: 2rem;
-        max-width: calc(100vw - 280px);
-    }
-
-    /* Header du contenu principal */
-    .main-header {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--gray-200);
-    }
-
-    .main-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--gray-900);
-        margin: 0 0 0.5rem;
-    }
-
-    .main-subtitle {
-        color: var(--gray-600);
-        margin: 0;
-        font-size: 1.1rem;
-    }
-
-    /* Grid pour les stats */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .stats-card {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--gray-200);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .stats-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary-color), var(--purple-color));
-    }
-
-    .stats-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .stats-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .stats-info h3 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin: 0 0 0.5rem;
-        line-height: 1;
-    }
-
-    .stats-info p {
-        color: var(--gray-600);
-        margin: 0;
-        font-weight: 500;
-    }
-
-    .stats-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        opacity: 0.8;
-    }
-
-    .stats-blue { color: var(--primary-color); }
-    .stats-yellow { color: var(--warning-color); }
-    .stats-green { color: var(--success-color); }
-    .stats-purple { color: var(--purple-color); }
-
-    .stats-blue .stats-icon { background: rgba(59, 130, 246, 0.1); }
-    .stats-yellow .stats-icon { background: rgba(245, 158, 11, 0.1); }
-    .stats-green .stats-icon { background: rgba(16, 185, 129, 0.1); }
-    .stats-purple .stats-icon { background: rgba(139, 92, 246, 0.1); }
-
-    /* Section cards */
-    .section-card {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        border: 1px solid var(--gray-200);
-        margin-bottom: 2rem;
-        overflow: hidden;
-    }
-
-    .section-header {
-        padding: 1.5rem 2rem;
-        border-bottom: 1px solid var(--gray-200);
-        background: var(--gray-50);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .section-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 0;
-        color: var(--gray-900);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .section-content {
-        padding: 2rem;
-    }
-
-    /* Actions rapides */
-    .quick-actions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-
-    .action-card {
-        background: var(--white);
-        border: 2px solid var(--gray-200);
-        border-radius: var(--border-radius);
-        padding: 1.5rem;
-        text-align: center;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .action-card:hover {
-        border-color: var(--primary-color);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-        text-decoration: none;
-    }
-
-    .action-card-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: var(--white);
-    }
-
-    .action-card-text {
-        font-weight: 600;
-        color: var(--gray-900);
-        margin: 0;
-    }
-
-    .action-blue .action-card-icon { background: var(--primary-color); }
-    .action-green .action-card-icon { background: var(--success-color); }
-    .action-gray .action-card-icon { background: var(--gray-500); }
-
-    .action-blue:hover .action-card-text { color: var(--primary-color); }
-    .action-green:hover .action-card-text { color: var(--success-color); }
-    .action-gray:hover .action-card-text { color: var(--gray-500); }
-
-    /* Réservations actives */
-    .active-reservation {
-        background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
-        border: 1px solid var(--gray-200);
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .active-reservation:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .reservation-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1.5rem;
-    }
-
-    .reservation-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 0;
-        color: var(--gray-900);
-    }
-
-    .reservation-subtitle {
-        color: var(--gray-600);
-        margin: 0.5rem 0 0;
-    }
-
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.5rem 1rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-    }
-
-    .status-active {
-        background-color: #dcfce7;
-        color: #166534;
-    }
-
-    .status-pending {
-        background-color: #fef3c7;
-        color: #92400e;
-    }
-
-    .status-expired {
-        background-color: #fee2e2;
-        color: #991b1b;
-    }
-
-    .status-scheduled {
-        background-color: #dbeafe;
-        color: #1e40af;
-    }
-
-    .status-urgent {
-        background-color: #fee2e2;
-        color: #991b1b;
-        animation: pulse 2s infinite;
-    }
-
-    .status-warning {
-        background-color: #fed7aa;
-        color: #9a3412;
-    }
-
-    /* Timing info */
-    .timing-info {
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid var(--gray-200);
-        border-radius: var(--border-radius-sm);
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .timing-info h5 {
-        margin: 0 0 1rem;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--gray-700);
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-    }
-
-    .timing-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1rem;
-    }
-
-    .timing-item {
-        text-align: center;
-        padding: 1rem;
-        background: var(--white);
-        border-radius: var(--border-radius-sm);
-        border: 1px solid var(--gray-200);
-    }
-
-    .timing-label {
-        display: block;
-        font-size: 0.75rem;
-        color: var(--gray-500);
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-    }
-
-    .timing-value {
-        font-size: 1.125rem;
-        color: var(--gray-900);
-        font-weight: 700;
-    }
-
-    /* Progress bar */
-    .progress-section {
-        margin-bottom: 1.5rem;
-    }
-
-    .progress-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-
-    .progress-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--gray-700);
-    }
-
-    .progress-date {
-        font-size: 0.875rem;
-        color: var(--gray-500);
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 12px;
-        background-color: var(--gray-200);
-        border-radius: 9999px;
-        overflow: hidden;
-        margin-bottom: 1rem;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary-color), var(--purple-color));
-        transition: width 1s ease-in-out;
-        border-radius: 9999px;
-    }
-
-    .progress-fill.urgent {
-        background: linear-gradient(90deg, var(--danger-color), #dc2626);
-        animation: pulse 2s infinite;
-    }
-
-    .progress-fill.warning {
-        background: linear-gradient(90deg, var(--warning-color), #f59e0b);
-    }
-
-    .countdown-timer {
-        text-align: center;
-        font-size: 1.75rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        transition: color 0.3s ease;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: var(--border-radius-sm);
-        border: 1px solid var(--gray-200);
-        font-family: 'Courier New', monospace;
-        letter-spacing: 0.1em;
-    }
-
-    .countdown-timer.text-red {
-        color: var(--danger-color);
-        animation: pulse 2s infinite;
-    }
-
-    .countdown-timer.text-blue {
-        color: var(--primary-color);
-    }
-
-    .countdown-timer.text-orange {
-        color: var(--warning-color);
-    }
-
-    .countdown-timer.text-green {
-        color: var(--success-color);
-    }
-
-    /* Actions des réservations */
-    .reservation-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--gray-200);
-    }
-
-    .reservation-price {
-        font-size: 1.125rem;
-        font-weight: 700;
-        color: var(--gray-900);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 0.75rem;
-    }
-
-    .btn-sm {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.875rem;
-        border-radius: var(--border-radius-sm);
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.2s;
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .btn-blue {
-        background-color: var(--primary-color);
-        color: var(--white);
-    }
-
-    .btn-blue:hover {
-        background-color: #2563eb;
-        color: var(--white);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .bg-orange-500 {
-        background-color: var(--warning-color);
-        color: var(--white);
-    }
-
-    .bg-orange-500:hover {
-        background-color: #f59e0b;
-        color: var(--white);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .bg-gray-200 {
-        background-color: var(--gray-200);
-        color: var(--gray-500);
-        cursor: not-allowed;
-    }
-
-
-    /* État vide */
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-    }
-
-    .empty-state i {
-        font-size: 4rem;
-        color: var(--gray-400);
-        margin-bottom: 1.5rem;
-    }
-
-    .empty-state h4 {
-        color: var(--gray-700);
-        margin-bottom: 1rem;
-    }
-
-    .empty-state p {
-        color: var(--gray-600);
-        margin-bottom: 2rem;
-    }
-
-    /* Animations */
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .dashboard-sidebar {
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .dashboard-sidebar.open {
-            transform: translateX(0);
-        }
-
-        .dashboard-main {
-            margin-left: 0;
-            max-width: 100vw;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .timing-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .dashboard-main {
-            padding: 1rem;
-        }
-
-        .main-header {
-            padding: 1.5rem;
-        }
-
-        .section-content {
-            padding: 1.5rem;
-        }
-
-        .active-reservation {
-            padding: 1.5rem;
-        }
-
-        .reservation-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .reservation-actions {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .action-buttons {
-            width: 100%;
-        }
-
-        .timing-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .quick-actions-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
 
 </head>
 
@@ -623,29 +33,13 @@
         <div id="de-preloader"></div>
         <!-- page preloader close -->
 
-         <!-- header begin -->
-         @include('partials.headerblanc')
-         <!-- header close -->
+       
 
         <!-- content begin -->
         <div class="no-bottom no-top zebra" id="content">
             <div id="top"></div>
             
-            <!-- section begin -->
-            <section id="subheader" class="jarallax text-light">
-                <img src="{{ asset('images/background/14.jpg') }}" class="jarallax-img" alt="">
-                    <div class="center-y relative text-center">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-									<h1>Dashboard</h1>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-            </section>
-            <!-- section close -->
+           
 
             <section id="section-cars" class="bg-gray-100">
                 <div class="container">
@@ -675,318 +69,410 @@
                         </div>
 
                         <div class="col-lg-9">
-                            <!-- Statistiques rapides -->
-                            <div class="row">
-                                <div class="col-lg-3 col-6 mb25 order-sm-1">
-                                    <div class="card p-4 rounded-5">
-                                        <div class="symbol mb40">
-                                            <i class="fa id-color fa-2x fa-calendar-check-o"></i>
-                                        </div>
-                                        <span class="h1 mb0">
-                                        @php
-                                            $activeCount = auth()->user()->reservations()
-                                                ->where('status', 'active')
-                                                ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) > ?", [now()])
-                                                ->whereRaw("CONCAT(reservation_start_date, ' ', reservation_start_time) <= ?", [now()])
-                                                ->count();
-                                        @endphp
-                                                {{ $activeCount }}
-                                        </span>
-                                        <span class="text-gray">Réservations actives</span>
-                                    </div>
-                                </div>
+                           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Colonne principale -->
+            <div class="lg:col-span-2 space-y-6">
+            
 
-                                <div class="col-lg-3 col-6 mb25 order-sm-1">
-                                    <div class="card p-4 rounded-5">
-                                        <div class="symbol mb40">
-                                            <i class="fa id-color fa-2x fa-tags"></i>
-                                        </div>
-                                        <span class="h1 mb0">12</span>
-                                        <span class="text-gray">Coupons</span>
-                                    </div>
+                <!-- Informations de la voiture -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <div class="flex items-start space-x-6">
+                        @if($reservation->car->image)
+                            <img src="{{ Storage::url($reservation->car->image) }}" 
+                                 alt="{{ $reservation->car->brand }} {{ $reservation->car->model }}" 
+                                 class="w-32 h-24 object-cover rounded-lg">
+                        @else
+                            <div class="w-32 h-24 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <i data-lucide="car" class="w-8 h-8 text-gray-400"></i>
+                            </div>
+                        @endif
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                                {{ $reservation->car->brand }} {{ $reservation->car->model }} 
+                                @if($reservation->car->year)
+                                    ({{ $reservation->car->year }})
+                                @endif
+                            </h3>
+                            <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                @if($reservation->car->seats)
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                    <span>{{ $reservation->car->seats }} places</span>
                                 </div>
-
-                                <div class="col-lg-3 col-6 mb25 order-sm-1">
-                                    <div class="card p-4 rounded-5">
-                                        <div class="symbol mb40">
-                                            <i class="fa id-color fa-2x fa-calendar"></i>
-                                        </div>
-                                        <span class="h1 mb0">
-                                            {{ auth()->user()->reservations()->count() }}
-                                        </span>
-                                        <span class="text-gray">Total réservations</span>
-                                    </div>
+                                @endif
+                                @if($reservation->car->fuel_type)
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="fuel" class="w-4 h-4"></i>
+                                    <span>{{ $reservation->car->fuel_type }}</span>
                                 </div>
+                                @endif
+                                @if($reservation->car->transmission)
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="settings" class="w-4 h-4"></i>
+                                    <span>{{ $reservation->car->transmission }}</span>
+                                </div>
+                                @endif
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                                    <span>{{ $reservation->with_driver ? 'Avec chauffeur' : 'Sans chauffeur' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="col-lg-3 col-6 mb25 order-sm-1">
-                                    <div class="card p-4 rounded-5">
-                                        <div class="symbol mb40">
-                                            <i class="fa id-color fa-2x fa-calendar-times-o"></i>
-                                        </div>
-                                        <span class="h1 mb0">
-                                            {{ number_format(auth()->user()->reservations()->where('payment_status', 'paid')->sum('final_total'), 0, ',', ' ') }}
-                                        </span>
-                                        <span class="text-gray">FCFA dépensés</span>
+                <!-- Détails de la période -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Période de réservation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="calendar" class="w-5 h-5 text-green-500"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900">Début</div>
+                                    <div class="text-gray-600">
+                                        {{ \Carbon\Carbon::parse($reservation->reservation_start_date)->format('d/m/Y') }} 
+                                        à {{ $reservation->reservation_start_time }}
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Réservations actives avec compte à rebours -->
-                            @php
-                                $activeReservations = auth()->user()->reservations()
-                                    ->with('car')
-                                    ->where('status', 'active')
-                                    ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) > ?", [now()])
-                                    ->orderBy('reservation_end_date', 'asc')
-                                    ->orderBy('reservation_end_time', 'asc')
-                                    ->get();
-                            @endphp
-
-                            @if($activeReservations->count() > 0)
-                                <div class="section-card">
-                                    <div class="section-header">
-                                        <h3 class="section-title">
-                                            <i class="fas fa-play-circle"></i>
-                                            Réservations en cours
-                                        </h3>
-                                    </div>
-                                    <div class="section-content">
-                                        @foreach($activeReservations as $reservation)
-                                            @php
-                                                $startDateTime = $reservation->getStartDateTime();
-                                                $endDateTime = $reservation->getEndDateTime();
-                                                $now = \Carbon\Carbon::now();
-                                                
-                                                // Calculer les informations de timing
-                                                $totalDurationHours = $startDateTime->diffInHours($endDateTime);
-                                                $elapsedHours = $startDateTime->diffInHours($now);
-                                                $remainingHours = $endDateTime->diffInHours($now);
-                                                $progressPercentage = $elapsedHours > 0 ? min(100, ($elapsedHours / $totalDurationHours) * 100) : 0;
-                                                
-                                                // Déterminer le statut détaillé
-                                                $remainingMinutes = $endDateTime->diffInMinutes($now);
-                                                if ($remainingMinutes < 60) {
-                                                    $detailedStatus = ['status' => 'urgent', 'label' => 'Urgent'];
-                                                } elseif ($remainingMinutes < 180) { // moins de 3h
-                                                    $detailedStatus = ['status' => 'warning', 'label' => 'Attention'];
-                                                } else {
-                                                    $detailedStatus = ['status' => 'active', 'label' => 'Active'];
-                                                }
-                                            @endphp
-                                            
-                                            <div class="active-reservation" 
-                                                data-reservation-id="{{ $reservation->id }}"
-                                                data-end-date="{{ $endDateTime->toISOString() }}"
-                                                data-start-date="{{ $startDateTime->toISOString() }}"
-                                                data-is-scheduled="0">
-                                                
-                                                <div class="reservation-header">
-                                                    <div>
-                                                        <h4 class="reservation-title">
-                                                            {{ $reservation->car->brand }} {{ $reservation->car->model }}
-                                                        </h4>
-                                                        <p class="reservation-subtitle">
-                                                            {{ $reservation->with_driver ? 'Avec chauffeur' : 'Sans chauffeur' }}
-                                                        </p>
-                                                    </div>
-                                                    <div>
-                                                        <span class="status-badge status-{{ $detailedStatus['status'] }}">
-                                                            {{ $detailedStatus['label'] }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- Informations de timing détaillées -->
-                                                <div class="timing-info">
-                                                    <h5>Informations de timing</h5>
-                                                    <div class="timing-grid">
-                                                        <div class="timing-item">
-                                                            <span class="timing-label">Durée totale</span>
-                                                            <span class="timing-value">{{ $reservation->total_days }} jour{{ $reservation->total_days > 1 ? 's' : '' }}</span>
-                                                        </div>
-                                                        <div class="timing-item">
-                                                            <span class="timing-label">Temps écoulé</span>
-                                                            <span class="timing-value">{{ max(0, $elapsedHours) }}h</span>
-                                                        </div>
-                                                        <div class="timing-item">
-                                                            <span class="timing-label">Temps restant</span>
-                                                            <span class="timing-value">{{ max(0, $remainingHours) }}h</span>
-                                                        </div>
-                                                        <div class="timing-item">
-                                                            <span class="timing-label">Progression</span>
-                                                            <span class="timing-value">{{ number_format($progressPercentage, 1) }}%</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- Compte à rebours -->
-                                                <div class="progress-section">
-                                                    <div class="progress-header">
-                                                        <span class="progress-label">Temps restant</span>
-                                                        <span class="progress-date">
-                                                            Fin: {{ $endDateTime->format('d/m/Y H:i') }}
-                                                        </span>
-                                                    </div>
-                                                    
-                                                    <!-- Barre de progression -->
-                                                    <div class="progress-bar">
-                                                        <div class="progress-fill 
-                                                            @if($detailedStatus['status'] === 'urgent') urgent
-                                                            @elseif($detailedStatus['status'] === 'warning') warning
-                                                            @endif"
-                                                            style="width: {{ $progressPercentage }}%">
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <!-- Affichage du temps restant -->
-                                                    <div class="countdown-timer 
-                                                        @if($detailedStatus['status'] === 'urgent') text-red
-                                                        @elseif($detailedStatus['status'] === 'warning') text-orange
-                                                        @else text-green
-                                                        @endif">
-                                                        00h-00m-00s
-                                                    </div>
-                                                </div>
-
-                                                <!-- Actions -->
-                                                <div class="reservation-actions">
-                                                    <div class="reservation-price">
-                                                        <i class="fas fa-money-bill-wave"></i>
-                                                        {{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA
-                                                    </div>
-                                                    <div class="action-buttons">
-                                                        <a href="{{ route('reservations.show', $reservation) }}" class="btn-sm btn-blue">
-                                                            <i class="fas fa-eye"></i>
-                                                            Détails
-                                                        </a>
-                                                        
-                                                        {{-- Bouton PROLONGER - Toujours visible pour les réservations actives --}}
-                                                        @if($reservation->status === 'active')
-                                                            @php
-                                                                $remainingSeconds = $endDateTime->diffInSeconds($now);
-                                                                $canExtend = $remainingSeconds >= 3600; // >= 1 heure
-                                                                $remainingHoursForButton = floor($remainingSeconds / 3600);
-                                                                $remainingMinutesForButton = floor(($remainingSeconds % 3600) / 60);
-                                                                $remainingSecondsDisplay = $remainingSeconds % 60;
-                                                            @endphp
-                                                            
-                                                            @if($canExtend)
-                                                                {{-- Bouton ACTIF si >= 1h --}}
-                                                                <a href="{{ route('reservations.form', $reservation) }}" 
-                                                                class="btn-sm bg-orange-500"
-                                                                title="Temps restant: {{ $remainingHoursForButton }}h {{ $remainingMinutesForButton }}m {{ $remainingSecondsDisplay }}s">
-                                                                    <i class="fas fa-clock"></i> Prolonger
-                                                                </a>
-                                                            @else
-                                                                {{-- Bouton INACTIF (grisé) si < 1h --}}
-                                                                <span class="btn-sm bg-gray-200"
-                                                                    title="Prolongation bloquée : il reste {{ $remainingMinutesForButton }}m {{ $remainingSecondsDisplay }}s (minimum requis : 1h)">
-                                                                    <i class="fas fa-clock"></i> Prolonger
-                                                                </span>
-                                                            @endif
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="calendar" class="w-5 h-5 text-red-500"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900">Fin</div>
+                                    <div class="text-gray-600">
+                                        {{ \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d/m/Y') }} 
+                                        à {{ $reservation->reservation_end_time }}
                                     </div>
                                 </div>
-                            @endif
-
-                             <!-- Réservations récentes -->
-                            @php
-                                $recentReservations = auth()->user()->reservations()
-                                    ->with('car')
-                                    ->whereIn('status', ['active', 'expired', 'completed'])
-                                    ->orderBy('created_at', 'desc')
-                                    ->limit(5)
-                                    ->get();
-                            @endphp
-
-                            @if($recentReservations->count() > 0)
-                                <div class="card p-4 rounded-5 mb25">
-                                    <h4>Mes réservations récentes</h4>
-                                    @foreach($recentReservations as $reservation)
-                                        @php
-                                            // Calculer le statut basé uniquement sur les dates
-                                            $now = now();
-                                            $startDateTime = $reservation->getStartDateTime();
-                                            $endDateTime = $reservation->getEndDateTime();
-                                            $detailedStatus = [];
-                                            
-                                            if ($endDateTime <= $now) {
-                                                // Réservation expirée
-                                                $detailedStatus = [
-                                                    'status' => 'expired',
-                                                    'label' => 'Expiré',
-                                                    'color' => 'red'
-                                                ];
-                                            }
-                                            elseif ($startDateTime > $now) {
-                                                // Réservation programmée (pas encore commencée)
-                                                $detailedStatus = [
-                                                    'status' => 'scheduled',
-                                                    'label' => 'Programmé',
-                                                    'color' => 'blue'
-                                                ];
-                                            }
-                                            else {
-                                                // Réservation en cours
-                                                $detailedStatus = [
-                                                    'status' => 'active',
-                                                    'label' => 'En cours',
-                                                    'color' => 'green'
-                                                ];
-                                            }
-                                        @endphp
-                                    <table class="table de-table">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Voiture</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Imatriculation</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Nombre de jours</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Prix payé</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Date et heure de début</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Date et heure de fin</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                        <td><span class="d-lg-none d-sm-block">Voiture</span><div class="badge bg-gray-100 text-dark">{{ $reservation->car->name }} {{ $reservation->car->model }}</div></td>
-                                        <td><span class="d-lg-none d-sm-block">Imatriculation</span><span class="bold"></span>{{ $reservation->car->license_plate }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Nombre de jours</span>{{ $reservation->total_days}} Jours</td>
-                                        <td><span class="d-lg-none d-sm-block">Prix payé</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
-                                        <td><span class="d-lg-none d-sm-block">Date et heure de début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Date et heure de fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><div class="badge rounded-pill bg-{{ $detailedStatus['status'] }}">{{ $detailedStatus['label'] }}</div></td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            @if($recentReservations->count() == 0)
-                                <div class="section-card">
-                                    <div class="section-content">
-                                        <div class="empty-state">
-                                            <i class="fas fa-car"></i>
-                                            <h4>Aucune réservation</h4>
-                                            <p>Vous n'avez pas encore effectué de réservation.</p>
-                                            <a href="{{ route('home') }}" class="action-card action-blue" style="display: inline-flex; width: auto;">
-                                                <div class="action-card-icon">
-                                                    <i class="fas fa-plus"></i>
-                                                </div>
-                                                <p class="action-card-text">Faire une réservation</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="text-center bg-blue-50 rounded-lg p-4">
+                                <div class="text-2xl font-bold text-blue-600">{{ $reservation->total_days }}</div>
+                                <div class="text-sm text-blue-600">{{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</div>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                                            <!-- Résumé de la réservation -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Résumé financier</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">ID Réservation</span>
+                            <span class="font-medium">#{{ $reservation->id }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Durée</span>
+                            <span class="font-medium">{{ $reservation->total_days }} {{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Tarif journalier</span>
+                            <span class="font-medium">{{ number_format($reservation->daily_rate, 0, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Sous-total</span>
+                            <span class="font-medium">{{ number_format($reservation->subtotal, 0, ',', ' ') }} FCFA</span>
+                        </div>
+                        @if($reservation->discount_percentage > 0)
+                        <div class="flex justify-between text-green-600">
+                            <span>Remise ({{ $reservation->discount_percentage }}%)</span>
+                            <span>-{{ number_format($reservation->discount_amount, 0, ',', ' ') }} FCFA</span>
+                        </div>
+                        @endif
+                        <hr class="my-3">
+                        <div class="flex justify-between font-semibold text-lg">
+                            <span>Total final</span>
+                            <span class="text-blue-600">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-medium {{ $reservation->payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                {{ $reservation->payment_status === 'paid' ? 'Payé' : 'En attente de paiement' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extensions -->
+                @if(isset($reservation->extensions) && $reservation->extensions->count() > 0)
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Extensions</h3>
+                    <div class="space-y-3">
+                        @foreach($reservation->extensions as $extension)
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <div>
+                                    <div class="font-medium text-gray-900">Extension #{{ $extension->id }}</div>
+                                    <div class="text-sm text-gray-600">
+                                        Du {{ \Carbon\Carbon::parse($extension->start_date)->format('d/m/Y H:i') }} 
+                                        au {{ \Carbon\Carbon::parse($extension->end_date)->format('d/m/Y H:i') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
+                                <div class="text-xs {{ $extension->status === 'paid' ? 'text-green-600' : 'text-yellow-600' }}">
+                                    {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Section Contrat de Réservation -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i data-lucide="file-text" class="w-5 h-5 inline mr-2"></i>
+                        Contrat de Réservation
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex items-start space-x-3">
+                                <i data-lucide="info" class="w-5 h-5 text-blue-500 mt-0.5"></i>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-blue-900 mb-1">Votre contrat de location</h4>
+                                    <p class="text-sm text-blue-700">
+                                        Consultez ou téléchargez votre contrat officiel de location avec tous les détails de votre réservation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2">
+                            <!-- Bouton Voir le contrat -->
+                            <a href="{{ route('reservations.contract.preview', $reservation) }}" 
+                            target="_blank"
+                            class="flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                                Voir le contrat
+                            </a>
+                            
+                            <!-- Bouton Télécharger PDF -->
+                            <a href="{{ route('reservations.contract.download', $reservation) }}" 
+                            class="flex items-center justify-center w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                Télécharger PDF
+                            </a>
+                        </div>
+
+                        <div class="text-xs text-gray-500 text-center mt-3">
+                            <i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>
+                            Document officiel sécurisé
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
+                    <div class="space-y-3">
+                        @if($reservation->status === 'pending')
+                        <button onclick="confirmReservation()" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                            Confirmer la réservation
+                        </button>
+                        @endif
+                        <!-- @if(in_array($reservation->status, ['pending', 'active']))
+                        <button onclick="cancelReservation()" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                            Annuler la réservation
+                        </button>
+                        @endif -->
+                        <button onclick="downloadInvoice()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            Télécharger la facture
+                        </button>
+                        <a href="{{ route('reservations.index') }}" class="block w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-center">
+                            Retour aux réservations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialiser Lucide
+        lucide.createIcons();
+
+        // Démarrer le compte à rebours
+        function startCountdown() {
+            // Construire les dates correctement avec les nouveaux champs
+            const startDateTime = '{{ $reservation->reservation_start_date }}T{{ $reservation->reservation_start_time }}';
+            const endDateTime = '{{ $reservation->reservation_end_date }}T{{ $reservation->reservation_end_time }}';
+            
+            const startDate = new Date(startDateTime);
+            const endDate = new Date(endDateTime);
+            const circle = document.getElementById('progressRing');
+            const circumference = 2 * Math.PI * 15.9155;
+
+            // Initialiser le cercle de progression
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = circumference;
+
+            function updateCountdown() {
+                const now = new Date();
+                let diff, totalDiff, elapsed, progress;
+                let days, hours, minutes, seconds;
+                let message = '';
+
+                if (now >= endDate) {
+                    // Réservation expirée
+                    document.getElementById('daysLeft').textContent = '00';
+                    document.getElementById('hoursLeft').textContent = '00';
+                    document.getElementById('minutesLeft').textContent = '00';
+                    document.getElementById('secondsLeft').textContent = '00';
+                    document.getElementById('progressPercent').textContent = '100%';
+                    document.getElementById('countdownMessage').textContent = 'Réservation expirée';
+                    updateStatus('expired');
+                    return;
+                }
+
+                if (now < startDate) {
+                    // Réservation pas encore commencée - compte à rebours jusqu'au début
+                    diff = startDate - now;
+                    totalDiff = endDate - startDate;
+                    progress = 0;
+                    message = 'Temps avant le début de la réservation';
+                    updateStatus('scheduled');
+                } else {
+                    // Réservation en cours - compte à rebours jusqu'à la fin
+                    diff = endDate - now;
+                    totalDiff = endDate - startDate;
+                    elapsed = now - startDate;
+                    progress = Math.min(100, Math.max(0, (elapsed / totalDiff) * 100));
+                    message = 'Temps restant avant la fin';
+                    
+                    // Déterminer le statut selon le temps restant
+                    const totalHours = Math.floor(diff / (1000 * 60 * 60));
+                    if (totalHours < 1) {
+                        updateStatus('urgent');
+                    } else if (totalHours < 24) {
+                        updateStatus('warning');
+                    } else {
+                        updateStatus('active');
+                    }
+                }
+
+                // Calculer jours, heures, minutes, secondes
+                days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // Mettre à jour l'affichage avec zéros de remplissage
+                document.getElementById('daysLeft').textContent = String(days).padStart(2, '0');
+                document.getElementById('hoursLeft').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutesLeft').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('secondsLeft').textContent = String(seconds).padStart(2, '0');
+                document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+                document.getElementById('countdownMessage').textContent = message;
+
+                // Mettre à jour le cercle de progression
+                const offset = circumference - (progress / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+            }
+
+            function updateStatus(status) {
+                const statusElement = document.getElementById('reservationStatus');
+                let className, text;
+                
+                switch(status) {
+                    case 'scheduled':
+                        className = 'px-3 py-1 rounded-full text-sm font-medium status-scheduled';
+                        text = 'Programmé';
+                        break;
+                    case 'urgent':
+                        className = 'px-3 py-1 rounded-full text-sm font-medium status-urgent';
+                        text = 'Urgent';
+                        break;
+                    case 'warning':
+                        className = 'px-3 py-1 rounded-full text-sm font-medium status-warning';
+                        text = 'Attention';
+                        break;
+                    case 'active':
+                        className = 'px-3 py-1 rounded-full text-sm font-medium status-active';
+                        text = 'En cours';
+                        break;
+                    case 'expired':
+                        className = 'px-3 py-1 rounded-full text-sm font-medium status-expired';
+                        text = 'Expiré';
+                        break;
+                    default:
+                        return;
+                }
+                
+                statusElement.textContent = text;
+                statusElement.className = className;
+            }
+
+            // Mettre à jour immédiatement puis toutes les secondes
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Actions
+        function confirmReservation() {
+            if (confirm('Confirmer cette réservation ?')) {
+                fetch('/reservations/{{ $reservation->id }}/confirm', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de la confirmation');
+                    }
+                }).catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur de connexion');
+                });
+            }
+        }
+
+        function cancelReservation() {
+            if (confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')) {
+                fetch('/reservations/{{ $reservation->id }}/cancel', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de l\'annulation');
+                    }
+                }).catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur de connexion');
+                });
+            }
+        }
+
+        function downloadInvoice() {
+            window.open('/reservations/{{ $reservation->id }}/invoice', '_blank');
+        }
+
+        // Démarrer le compte à rebours au chargement
+        document.addEventListener('DOMContentLoaded', startCountdown);
+    </script>
+                        </div>
+
+                        </div>
+                   
                 </div>
             </section>
 			
@@ -1008,207 +494,7 @@
     <script src="{{ asset('js/plugins.js') }}"></script>
     <script src="{{ asset('js/designesia.js') }}"></script>
 
-    <script>
-        // Script pour le dashboard avec mise à jour en temps réel
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Dashboard script chargé');
-            // Collecter toutes les réservations avec leurs informations
-            const reservations = [];
-            document.querySelectorAll('.active-reservation').forEach(element => {
-                const reservationId = element.dataset.reservationId;
-                const endDate = element.dataset.endDate;
-                const startDate = element.dataset.startDate;
-                
-                if (endDate && reservationId) {
-                    reservations.push({
-                        id: reservationId,
-                        element: element,
-                        endDate: new Date(endDate),
-                        startDate: startDate ? new Date(startDate) : null,
-                        isScheduled: element.dataset.isScheduled === '1'
-                    });
-                }
-            });
-            
-            console.log(`${reservations.length} réservations trouvées pour le suivi`);
-            
-            // Fonction pour calculer et formater le temps restant
-            function calculateTimeRemaining(targetDate, isScheduled = false) {
-                const now = new Date();
-                const diff = targetDate - now;
-                
-                if (diff <= 0) {
-                    return {
-                        formatted: '00h-00m-00s',
-                        status: 'expired',
-                        className: 'text-red'
-                    };
-                }
-                
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                let formatted;
-                let status;
-                let className;
-                
-                if (isScheduled) {
-                    // Pour les réservations programmées
-                    className = 'text-blue';
-                    status = 'scheduled';
-                    
-                    if (days > 0) {
-                        formatted = `${days}j ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m`;
-                    } else {
-                        formatted = `${hours.toString().padStart(2, '0')}h-${minutes.toString().padStart(2, '0')}m-${seconds.toString().padStart(2, '0')}s`;
-                    }
-                } else {
-                    // Pour les réservations actives
-                    const totalMinutes = Math.floor(diff / (1000 * 60));
-                    
-                    if (totalMinutes < 60) {
-                        status = 'urgent';
-                        className = 'text-red';
-                    } else if (totalMinutes < 180) {
-                        status = 'warning';
-                        className = 'text-orange';
-                    } else {
-                        status = 'active';
-                        className = 'text-green';
-                    }
-                    
-                    if (days > 0) {
-                        formatted = `${days}j-${hours.toString().padStart(2, '0')}h-${minutes.toString().padStart(2, '0')}m-${seconds.toString().padStart(2, '0')}s`;
-                    } else {
-                        formatted = `${hours.toString().padStart(2, '0')}h-${minutes.toString().padStart(2, '0')}m-${seconds.toString().padStart(2, '0')}s`;
-                    }
-                }
-                
-                return { formatted, status, className };
-            }
-            
-            // Fonction pour mettre à jour les comptes à rebours
-            function updateCountdowns() {
-                reservations.forEach(reservation => {
-                    const countdownElement = reservation.element.querySelector('.countdown-timer');
-                    const statusBadge = reservation.element.querySelector('.status-badge');
-                    const progressFill = reservation.element.querySelector('.progress-fill');
-                    
-                    if (!countdownElement) return;
-                    
-                    const targetDate = reservation.isScheduled ? reservation.startDate : reservation.endDate;
-                    const timeInfo = calculateTimeRemaining(targetDate, reservation.isScheduled);
-                    
-                    // Mettre à jour le texte du countdown
-                    countdownElement.textContent = timeInfo.formatted;
-                    
-                    // Mettre à jour les classes CSS
-                    countdownElement.className = `countdown-timer ${timeInfo.className}`;
-                    
-                    // Mettre à jour le badge de statut pour les réservations actives
-                    if (statusBadge && !reservation.isScheduled) {
-                        statusBadge.className = `status-badge status-${timeInfo.status}`;
-                        
-                        const statusLabels = {
-                            'urgent': 'Urgent',
-                            'warning': 'Attention', 
-                            'active': 'Active',
-                            'expired': 'Expiré'
-                        };
-                        
-                        statusBadge.textContent = statusLabels[timeInfo.status] || 'Active';
-                    }
-                    
-                    // Mettre à jour la barre de progression pour les réservations actives
-                    if (progressFill && !reservation.isScheduled && reservation.startDate) {
-                        const now = new Date();
-                        const totalDuration = reservation.endDate - reservation.startDate;
-                        const elapsed = now - reservation.startDate;
-                        const progress = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
-                        
-                        progressFill.style.width = `${progress}%`;
-                        progressFill.className = `progress-fill ${timeInfo.status === 'urgent' ? 'urgent' : timeInfo.status === 'warning' ? 'warning' : ''}`;
-                    }
-                });
-                
-                // Mettre à jour les boutons prolonger
-                updateExtendButtons();
-            }
-            
-            // Fonction pour mettre à jour l'état du bouton prolonger
-            function updateExtendButtons() {
-                reservations.forEach(reservation => {
-                    if (!reservation.isScheduled) { // Seulement pour les réservations actives
-                        const extendButton = reservation.element.querySelector('a[href*="extend"], span[title*="Prolongation"]');
-                        
-                        if (extendButton) {
-                            const now = new Date();
-                            const remainingSeconds = Math.max(0, Math.floor((reservation.endDate - now) / 1000));
-                            const canExtend = remainingSeconds >= 3600; // >= 1 heure
-                            
-                            const remainingHours = Math.floor(remainingSeconds / 3600);
-                            const remainingMinutes = Math.floor((remainingSeconds % 3600) / 60);
-                            const remainingSecondsDisplay = remainingSeconds % 60;
-                            
-                            if (canExtend) {
-                                // Bouton actif
-                                if (extendButton.tagName === 'SPAN') {
-                                    // Convertir span en lien
-                                    const newButton = document.createElement('a');
-                                    newButton.href = extendButton.getAttribute('data-extend-url') || `/reservations/${reservation.id}/extend/form`;
-                                    newButton.className = 'btn-sm bg-orange-500';
-                                    newButton.title = `Temps restant: ${remainingHours}h ${remainingMinutes}m ${remainingSecondsDisplay}s`;
-                                    newButton.innerHTML = '<i class="fas fa-clock"></i> Prolonger';
-                                    extendButton.replaceWith(newButton);
-                                } else {
-                                    // Mettre à jour le titre
-                                    extendButton.title = `Temps restant: ${remainingHours}h ${remainingMinutes}m ${remainingSecondsDisplay}s`;
-                                    extendButton.className = 'btn-sm bg-orange-500';
-                                }
-                            } else {
-                                // Bouton inactif
-                                if (extendButton.tagName === 'A') {
-                                    // Convertir lien en span
-                                    const newButton = document.createElement('span');
-                                    newButton.className = 'btn-sm bg-gray-200';
-                                    newButton.title = `Prolongation bloquée : il reste ${remainingMinutes}m ${remainingSecondsDisplay}s (minimum requis : 1h)`;
-                                    newButton.innerHTML = '<i class="fas fa-clock"></i> Prolonger';
-                                    newButton.setAttribute('data-extend-url', extendButton.href);
-                                    extendButton.replaceWith(newButton);
-                                } else {
-                                    // Mettre à jour le titre
-                                    extendButton.title = `Prolongation bloquée : il reste ${remainingMinutes}m ${remainingSecondsDisplay}s (minimum requis : 1h)`;
-                                    extendButton.className = 'btn-sm bg-gray-200';
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Démarrer les mises à jour si il y a des réservations
-            if (reservations.length > 0) {
-                console.log('⏰ Démarrage du suivi temps réel...');
-                
-                // Première mise à jour immédiate
-                updateCountdowns();
-                
-                // Mise à jour toutes les secondes
-                const intervalId = setInterval(updateCountdowns, 1000);
-                
-                // Nettoyer l'intervalle si la page est fermée
-                window.addEventListener('beforeunload', function() {
-                    clearInterval(intervalId);
-                });
-                
-                console.log('Suivi temps réel activé');
-            } else {
-                console.log('Aucune réservation active à suivre');
-            }
-        });
-    </script>
+    
 
 </body>
 

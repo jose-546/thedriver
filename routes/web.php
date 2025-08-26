@@ -12,9 +12,9 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PolitiqueController;
 use Illuminate\Support\Facades\Route;
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
+ Route::get('/toni', function () {
+    return view('voitures');
+}); 
 
 /*
 |--------------------------------------------------------------------------

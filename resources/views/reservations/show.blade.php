@@ -1,138 +1,80 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="zxx">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Détails de la Réservation #{{ $reservation->id }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Rentaly - Multipurpose Vehicle Car Rental Website Template</title>
+    <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website Template" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+    <!-- CSS Files
+    ================================================== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet" type="text/css" id="mdb">
+    <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/custom-1.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/coloring.css') }}" rel="stylesheet" type="text/css">
+    <!-- color scheme -->
+    <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css">
+        <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <style>
-        .progress-ring {
-            transition: stroke-dashoffset 0.35s;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-        
-        .countdown-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .status-active { @apply bg-green-100 text-green-800 border-green-200; }
-        .status-pending { @apply bg-yellow-100 text-yellow-800 border-yellow-200; }
-        .status-expired { @apply bg-red-100 text-red-800 border-red-200; }
-        .status-scheduled { @apply bg-blue-100 text-blue-800 border-blue-200; }
-        .status-urgent { @apply bg-red-100 text-red-800 border-red-200 animate-pulse; }
-        .status-warning { @apply bg-orange-100 text-orange-800 border-orange-200; }
-        .status-confirmed { @apply bg-green-100 text-green-800 border-green-200; }
-        .status-cancelled { @apply bg-gray-100 text-gray-800 border-gray-200; }
 
-        .countdown-digits {
-            font-family: 'Courier New', monospace;
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 0.1em;
-        }
-    </style>
+
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                    </button>
-                    <h1 class="text-2xl font-bold text-gray-900">Détails de la Réservation #{{ $reservation->id }}</h1>
-                </div>
-                <span id="reservationStatus" class="px-3 py-1 rounded-full text-sm font-medium status-{{ strtolower(str_replace(' ', '-', $reservation->status)) }}">
-                    {{ ucfirst($reservation->status) }}
-                </span>
-            </div>
-        </div>
-    </header>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<body>
+    <div id="wrapper">
+        
+        <!-- page preloader begin -->
+        <div id="de-preloader"></div>
+        <!-- page preloader close -->
+
+       
+
+        <!-- content begin -->
+        <div class="no-bottom no-top zebra" id="content">
+            <div id="top"></div>
+            
+           
+
+            <section id="section-cars" class="bg-gray-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 mb30">
+                            <div class="card p-4 rounded-5">
+                                <div class="profile_avatar">
+                                    <div class="profile_img">
+                                        <img src="{{ asset('images/profile/1.jpg') }}" alt="">
+                                    </div>
+                                    <div class="profile_name">
+                                        <h4>
+                                            Monica Lucas                                                
+                                            <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="spacer-20"></div>
+                                <ul class="menu-col">
+                                    <li><a href="" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
+                                    <li><a href="{{ asset('account-profile.html') }}"><i class="fa fa-user"></i>My Profile</a></li>
+                                    <li><a href="{{ asset('account-booking.html') }}"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                    <li><a href="{{ asset('account-favorite.html') }}"><i class="fa fa-car"></i>My Favorite Cars</a></li>
+                                    <li><a href="{{ asset('login.html') }}"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9">
+                           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <!-- Colonne principale -->
             <div class="lg:col-span-2 space-y-6">
-                
-                <!-- Carte de compte à rebours -->
-                <div class="countdown-card rounded-xl p-6 text-white">
-                    <div class="flex items-center justify-between mb-6">
-                        <div>
-                            <h2 class="text-xl font-semibold mb-2">Temps restant</h2>
-                            <p class="text-white/80" id="reservationDates">
-                                Du {{ \Carbon\Carbon::parse($reservation->reservation_start_date)->format('d M Y') }} à {{ $reservation->reservation_start_time }} 
-                                au {{ \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d M Y') }} à {{ $reservation->reservation_end_time }}
-                            </p>
-                        </div>
-                        <div class="relative w-16 h-16">
-                            <svg class="w-16 h-16" viewBox="0 0 36 36">
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                      fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-                                <path id="progressRing" class="progress-ring" 
-                                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                      fill="none" stroke="white" stroke-width="2" 
-                                      stroke-dasharray="100, 100" stroke-dashoffset="0"/>
-                            </svg>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <span class="text-xs font-medium" id="progressPercent">0%</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Compte à rebours avec jours-heures-minutes-secondes -->
-                    <div class="grid grid-cols-4 gap-3 text-center">
-                        <div class="bg-white/10 rounded-lg p-3">
-                            <div class="text-2xl font-bold countdown-digits" id="daysLeft">--</div>
-                            <div class="text-sm text-white/80">Jours</div>
-                        </div>
-                        <div class="bg-white/10 rounded-lg p-3">
-                            <div class="text-2xl font-bold countdown-digits" id="hoursLeft">--</div>
-                            <div class="text-sm text-white/80">Heures</div>
-                        </div>
-                        <div class="bg-white/10 rounded-lg p-3">
-                            <div class="text-2xl font-bold countdown-digits" id="minutesLeft">--</div>
-                            <div class="text-sm text-white/80">Minutes</div>
-                        </div>
-                        <div class="bg-white/10 rounded-lg p-3">
-                            <div class="text-2xl font-bold countdown-digits" id="secondsLeft">--</div>
-                            <div class="text-sm text-white/80">Secondes</div>
-                        </div>
-                    </div>
-
-                    <!-- Message de statut dynamique -->
-                    <div class="mt-4 text-center">
-                        <p id="countdownMessage" class="text-white/90 text-sm font-medium"></p>
-                    </div>
-
-                    @if($reservation->status === 'active' && \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($reservation->reservation_end_date)->setTimeFromTimeString($reservation->reservation_end_time)))
-                    <div class="mt-6 text-center">
-                        @php
-                            $now = \Carbon\Carbon::now();
-                            $endDateTime = \Carbon\Carbon::parse($reservation->reservation_end_date)->setTimeFromTimeString($reservation->reservation_end_time);
-                            $remainingSeconds = $endDateTime->diffInSeconds($now);
-                            $canExtend = $remainingSeconds >= 3600; // >= 1 heure
-                        @endphp
-                        
-                        @if($canExtend)
-                            <a href="{{ route('reservations.extend.form', $reservation) }}" 
-                               class="inline-block bg-white text-blue-600 py-2 px-6 rounded-lg font-medium hover:bg-blue-50 transition-colors">
-                                <i data-lucide="clock" class="w-4 h-4 inline mr-2"></i>
-                                Prolonger la réservation
-                            </a>
-                        @else
-                            <span class="inline-block bg-white/20 text-white/60 py-2 px-6 rounded-lg font-medium cursor-not-allowed"
-                                  title="Prolongation impossible (moins d'1h restante)">
-                                <i data-lucide="clock" class="w-4 h-4 inline mr-2"></i>
-                                Prolongation bloquée
-                            </span>
-                        @endif
-                    </div>
-                    @endif
-                </div>
+            
 
                 <!-- Informations de la voiture -->
                 <div class="bg-white rounded-xl shadow-sm border p-6">
@@ -216,40 +158,7 @@
                     </div>
                 </div>
 
-                <!-- Extensions -->
-                @if(isset($reservation->extensions) && $reservation->extensions->count() > 0)
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Extensions</h3>
-                    <div class="space-y-3">
-                        @foreach($reservation->extensions as $extension)
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <div>
-                                    <div class="font-medium text-gray-900">Extension #{{ $extension->id }}</div>
-                                    <div class="text-sm text-gray-600">
-                                        Du {{ \Carbon\Carbon::parse($extension->start_date)->format('d/m/Y H:i') }} 
-                                        au {{ \Carbon\Carbon::parse($extension->end_date)->format('d/m/Y H:i') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-semibold text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
-                                <div class="text-xs {{ $extension->status === 'paid' ? 'text-green-600' : 'text-yellow-600' }}">
-                                    {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-            </div>
-
-            <!-- Sidebar -->
-            <div class="space-y-6">
-                
-                <!-- Résumé de la réservation -->
+                                            <!-- Résumé de la réservation -->
                 <div class="bg-white rounded-xl shadow-sm border p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Résumé financier</h3>
                     <div class="space-y-3">
@@ -288,67 +197,78 @@
                     </div>
                 </div>
 
-                <!-- Ajoutez cette section dans votre sidebar, après la "Résumé financier" -->
-
-<!-- Section Contrat de Réservation -->
-<div class="bg-white rounded-xl shadow-sm border p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-        <i data-lucide="file-text" class="w-5 h-5 inline mr-2"></i>
-        Contrat de Réservation
-    </h3>
-    
-    <div class="space-y-3">
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div class="flex items-start space-x-3">
-                <i data-lucide="info" class="w-5 h-5 text-blue-500 mt-0.5"></i>
-                <div class="flex-1">
-                    <h4 class="font-medium text-blue-900 mb-1">Votre contrat de location</h4>
-                    <p class="text-sm text-blue-700">
-                        Consultez ou téléchargez votre contrat officiel de location avec tous les détails de votre réservation.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-2">
-            <!-- Bouton Voir le contrat -->
-            <a href="{{ route('reservations.contract.preview', $reservation) }}" 
-               target="_blank"
-               class="flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
-                Voir le contrat
-            </a>
-            
-            <!-- Bouton Télécharger PDF -->
-            <a href="{{ route('reservations.contract.download', $reservation) }}" 
-               class="flex items-center justify-center w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                Télécharger PDF
-            </a>
-        </div>
-
-        <div class="text-xs text-gray-500 text-center mt-3">
-            <i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>
-            Document officiel sécurisé
-        </div>
-    </div>
-</div>
-
-                <!-- Informations de contact -->
+                <!-- Extensions -->
+                @if(isset($reservation->extensions) && $reservation->extensions->count() > 0)
                 <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Extensions</h3>
                     <div class="space-y-3">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="user" class="w-4 h-4 text-gray-500"></i>
-                            <span class="text-sm text-gray-600">{{ $reservation->client_name }}</span>
+                        @foreach($reservation->extensions as $extension)
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <div>
+                                    <div class="font-medium text-gray-900">Extension #{{ $extension->id }}</div>
+                                    <div class="text-sm text-gray-600">
+                                        Du {{ \Carbon\Carbon::parse($extension->start_date)->format('d/m/Y H:i') }} 
+                                        au {{ \Carbon\Carbon::parse($extension->end_date)->format('d/m/Y H:i') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
+                                <div class="text-xs {{ $extension->status === 'paid' ? 'text-green-600' : 'text-yellow-600' }}">
+                                    {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="mail" class="w-4 h-4 text-gray-500"></i>
-                            <span class="text-sm text-gray-600">{{ $reservation->client_email }}</span>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Section Contrat de Réservation -->
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i data-lucide="file-text" class="w-5 h-5 inline mr-2"></i>
+                        Contrat de Réservation
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex items-start space-x-3">
+                                <i data-lucide="info" class="w-5 h-5 text-blue-500 mt-0.5"></i>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-blue-900 mb-1">Votre contrat de location</h4>
+                                    <p class="text-sm text-blue-700">
+                                        Consultez ou téléchargez votre contrat officiel de location avec tous les détails de votre réservation.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="phone" class="w-4 h-4 text-gray-500"></i>
-                            <span class="text-sm text-gray-600">{{ $reservation->client_phone }}</span>
+
+                        <div class="grid grid-cols-1 gap-2">
+                            <!-- Bouton Voir le contrat -->
+                            <a href="{{ route('reservations.contract.preview', $reservation) }}" 
+                            target="_blank"
+                            class="flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                                Voir le contrat
+                            </a>
+                            
+                            <!-- Bouton Télécharger PDF -->
+                            <a href="{{ route('reservations.contract.download', $reservation) }}" 
+                            class="flex items-center justify-center w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                Télécharger PDF
+                            </a>
+                        </div>
+
+                        <div class="text-xs text-gray-500 text-center mt-3">
+                            <i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>
+                            Document officiel sécurisé
                         </div>
                     </div>
                 </div>
@@ -362,11 +282,11 @@
                             Confirmer la réservation
                         </button>
                         @endif
-                        @if(in_array($reservation->status, ['pending', 'active']))
+                        <!-- @if(in_array($reservation->status, ['pending', 'active']))
                         <button onclick="cancelReservation()" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
                             Annuler la réservation
                         </button>
-                        @endif
+                        @endif -->
                         <button onclick="downloadInvoice()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                             Télécharger la facture
                         </button>
@@ -549,5 +469,33 @@
         // Démarrer le compte à rebours au chargement
         document.addEventListener('DOMContentLoaded', startCountdown);
     </script>
+                        </div>
+
+                        </div>
+                   
+                </div>
+            </section>
+			
+			
+        </div>
+        <!-- content close -->
+
+        <a href="{{ asset('#') }}" id="back-to-top"></a>
+        
+        <!-- footer begin -->
+        @include('partials.footer')
+        <!-- footer close -->
+        
+    </div>
+
+
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="{{ asset('js/plugins.js') }}"></script>
+    <script src="{{ asset('js/designesia.js') }}"></script>
+
+    
+
 </body>
+
 </html>
