@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -20,10 +21,693 @@
     <link href="{{ asset('css/coloring.css') }}" rel="stylesheet" type="text/css">
     <!-- color scheme -->
     <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css">
-        <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+    <style>
+        /* Styles pour remplacer les classes Tailwind */
+        .tw-container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        .tw-mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tw-px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .tw-px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .tw-py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .tw-py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .tw-p-6 {
+            padding: 1.5rem;
+        }
+        
+        .tw-p-4 {
+            padding: 1rem;
+        }
+        
+        .tw-p-3 {
+            padding: 0.75rem;
+        }
+        
+        .tw-pt-0\.5 {
+            padding-top: 0.125rem;
+        }
+        
+        .tw-mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .tw-mb-2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .tw-mb-1 {
+            margin-bottom: 0.25rem;
+        }
+        
+        .tw-mt-3 {
+            margin-top: 0.75rem;
+        }
+        
+        .tw-mr-2 {
+            margin-right: 0.5rem;
+        }
+        
+        .tw-mr-1 {
+            margin-right: 0.25rem;
+        }
+        
+        .tw-space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+        
+        .tw-space-y-3 > * + * {
+            margin-top: 0.75rem;
+        }
+        
+        .tw-space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+        
+        .tw-space-x-6 > * + * {
+            margin-left: 1.5rem;
+        }
+        
+        .tw-space-x-3 > * + * {
+            margin-left: 0.75rem;
+        }
+        
+        .tw-space-x-2 > * + * {
+            margin-left: 0.5rem;
+        }
+        
+        .tw-grid {
+            display: grid;
+        }
+        
+        .tw-grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        
+        .tw-grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        
+        .tw-grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        
+        @media (min-width: 1024px) {
+            .tw-lg-grid-cols-3 {
+                grid-template-columns: 1fr 350px;
+            }
+        }
+        
+        .tw-gap-8 {
+            gap: 2rem;
+        }
+        
+        .tw-gap-6 {
+            gap: 1.5rem;
+        }
+        
+        .tw-gap-4 {
+            gap: 1rem;
+        }
+        
+        .tw-gap-2 {
+            gap: 0.5rem;
+        }
+        
+        .tw-flex {
+            display: flex;
+        }
+        
+        .tw-inline-flex {
+            display: inline-flex;
+        }
+        
+        .tw-items-start {
+            align-items: flex-start;
+        }
+        
+        .tw-items-center {
+            align-items: center;
+        }
+        
+        .tw-items-stretch {
+            align-items: stretch;
+        }
+        
+        .tw-justify-center {
+            justify-content: center;
+        }
+        
+        .tw-justify-between {
+            justify-content: space-between;
+        }
+        
+        .tw-flex-1 {
+            flex: 1 1 0%;
+        }
+        
+        .tw-flex-col {
+            flex-direction: column;
+        }
+        
+        .tw-w-full {
+            width: 100%;
+        }
+        
+        .tw-w-32 {
+            width: 8rem;
+        }
+        
+        .tw-w-24 {
+            width: 6rem;
+        }
+        
+        .tw-w-8 {
+            width: 2rem;
+        }
+        
+        .tw-w-5 {
+            width: 1.25rem;
+        }
+        
+        .tw-w-4 {
+            width: 1rem;
+        }
+        
+        .tw-w-3 {
+            width: 0.75rem;
+        }
+        
+        .tw-w-2 {
+            width: 0.5rem;
+        }
+        
+        .tw-h-32 {
+            height: 8rem;
+        }
+        
+        .tw-h-24 {
+            height: 6rem;
+        }
+        
+        .tw-h-8 {
+            height: 2rem;
+        }
+        
+        .tw-h-5 {
+            height: 1.25rem;
+        }
+        
+        .tw-h-4 {
+            height: 1rem;
+        }
+        
+        .tw-h-3 {
+            height: 0.75rem;
+        }
+        
+        .tw-h-2 {
+            height: 0.5rem;
+        }
+        
+        .tw-object-cover {
+            object-fit: cover;
+        }
+        
+        .tw-rounded-xl {
+            border-radius: 0.75rem;
+        }
+        
+        .tw-rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .tw-rounded-full {
+            border-radius: 9999px;
+        }
+        
+        .tw-border {
+            border-width: 1px;
+            border-style: solid;
+        }
+        
+        .tw-shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .tw-bg-white {
+            background-color: #fff;
+        }
+        
+        .tw-bg-blue-50 {
+            background-color: #eff6ff;
+        }
+        
+        .tw-bg-blue-600 {
+            background-color: #2563eb;
+        }
+        
+        .tw-bg-red-600 {
+            background-color: #dc2626;
+        }
+        
+        .tw-bg-green-600 {
+            background-color: #16a34a;
+        }
+        
+        .tw-bg-gray-600 {
+            background-color: #4b5563;
+        }
+        
+        .tw-bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        
+        .tw-bg-gray-200 {
+            background-color: #e5e7eb;
+        }
+        
+        .tw-bg-green-100 {
+            background-color: #dcfce7;
+        }
+        
+        .tw-bg-yellow-100 {
+            background-color: #fef3c7;
+        }
+        
+        .tw-border-blue-200 {
+            border-color: #bfdbfe;
+        }
+        
+        .tw-text-center {
+            text-align: center;
+        }
+        
+        .tw-text-right {
+            text-align: right;
+        }
+        
+        .tw-text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+        
+        .tw-text-lg {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+        }
+        
+        .tw-text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+        
+        .tw-text-xs {
+            font-size: 0.75rem;
+            line-height: 1rem;
+        }
+        
+        .tw-text-2xl {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+        
+        .tw-font-semibold {
+            font-weight: 600;
+        }
+        
+        .tw-font-medium {
+            font-weight: 500;
+        }
+        
+        .tw-font-bold {
+            font-weight: 700;
+        }
+        
+        .tw-text-gray-900 {
+            color: #111827;
+        }
+        
+        .tw-text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .tw-text-gray-500 {
+            color: #6b7280;
+        }
+        
+        .tw-text-white {
+            color: #fff;
+        }
+        
+        .tw-text-blue-600 {
+            color: #2563eb;
+        }
+        
+        .tw-text-blue-500 {
+            color: #3b82f6;
+        }
+        
+        .tw-text-blue-900 {
+            color: #1e3a8a;
+        }
+        
+        .tw-text-blue-700 {
+            color: #1d4ed8;
+        }
+        
+        .tw-text-red-600 {
+            color: #dc2626;
+        }
+        
+        .tw-text-green-600 {
+            color: #16a34a;
+        }
+        
+        .tw-text-green-800 {
+            color: #166534;
+        }
+        
+        .tw-text-yellow-800 {
+            color: #92400e;
+        }
+        
+        .tw-text-gray-400 {
+            color: #9ca3af;
+        }
+        
+        .tw-inline {
+            display: inline;
+        }
+        
+        .tw-block {
+            display: block;
+        }
+        
+        .tw-hover-bg-blue-700:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .tw-hover-bg-red-700:hover {
+            background-color: #b91c1c;
+        }
+        
+        .tw-hover-bg-green-700:hover {
+            background-color: #15803d;
+        }
+        
+        .tw-hover-bg-gray-700:hover {
+            background-color: #374151;
+        }
+        
+        .tw-transition-colors {
+            transition-property: background-color, border-color, color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        /* Styles personnalisés pour les statuts */
+        .status-scheduled {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        
+        .status-urgent {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .status-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-expired {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
 
+        /* Styles personnalisés pour le layout */
+        .main-content-wrapper {
+            padding: 0 !important;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .main-content-section {
+            min-width: 0;
+        }
+
+        .sidebar-section {
+            width: 320px;
+        }
+
+        .card-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+
+        .car-info-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .car-image-container {
+            flex-shrink: 0;
+        }
+
+        .car-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .period-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .period-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .period-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .duration-highlight {
+            background: #dbeafe;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .total-row {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .extension-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .extension-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .extension-dot {
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .action-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-blue {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-blue:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .btn-red {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background: #b91c1c;
+            color: white;
+        }
+
+        .btn-green {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #15803d;
+            color: white;
+        }
+
+        .btn-gray {
+            background: #4b5563;
+            color: white;
+        }
+
+        .btn-gray:hover {
+            background: #374151;
+            color: white;
+        }
+
+        .contract-info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contract-info-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .sidebar-section {
+                width: 100%;
+            }
+            
+            .car-info-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .period-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .car-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -33,17 +717,14 @@
         <div id="de-preloader"></div>
         <!-- page preloader close -->
 
-       
-
         <!-- content begin -->
         <div class="no-bottom no-top zebra" id="content">
             <div id="top"></div>
-            
-           
 
-            <section id="section-cars" class="bg-gray-100">
+            <section id="section-cars" style="background-color: #f3f4f6;">
                 <div class="container">
                     <div class="row">
+                        <!-- Sidebar du template -->
                         <div class="col-lg-3 mb30">
                             <div class="card p-4 rounded-5">
                                 <div class="profile_avatar">
@@ -68,236 +749,250 @@
                             </div>
                         </div>
 
+                        <!-- Contenu principal -->
                         <div class="col-lg-9">
-                           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <!-- Colonne principale -->
-            <div class="lg:col-span-2 space-y-6">
-            
+                            <div class="main-content-wrapper">
+                                <div class="content-grid">
+                                    <!-- Section principale -->
+                                    <div class="main-content-section">
+                                        
+                                        <!-- Informations de la voiture -->
+                                        <div class="card-wrapper tw-p-6">
+                                            <div class="car-info-header">
+                                                @if($reservation->car->image)
+                                                    <div class="car-image-container">
+                                                        <img src="{{ Storage::url($reservation->car->image) }}" 
+                                                            alt="{{ $reservation->car->brand }} {{ $reservation->car->model }}" 
+                                                            class="tw-w-32 tw-h-24 tw-object-cover tw-rounded-lg">
+                                                    </div>
+                                                @else
+                                                    <div class="car-image-container">
+                                                        <div class="tw-w-32 tw-h-24 tw-bg-gray-200 tw-rounded-lg tw-flex tw-items-center tw-justify-center">
+                                                            <i data-lucide="car" class="tw-w-8 tw-h-8 tw-text-gray-400"></i>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <div class="tw-flex-1">
+                                                    <h3 class="tw-text-xl tw-font-semibold tw-text-gray-900 tw-mb-2">
+                                                        {{ $reservation->car->brand }} {{ $reservation->car->model }} 
+                                                        @if($reservation->car->year)
+                                                            ({{ $reservation->car->year }})
+                                                        @endif
+                                                    </h3>
+                                                    <div class="car-details-grid">
+                                                        @if($reservation->car->seats)
+                                                        <div class="detail-item">
+                                                            <i data-lucide="users" class="tw-w-4 tw-h-4"></i>
+                                                            <span>{{ $reservation->car->seats }} places</span>
+                                                        </div>
+                                                        @endif
+                                                        @if($reservation->car->fuel_type)
+                                                        <div class="detail-item">
+                                                            <i data-lucide="fuel" class="tw-w-4 tw-h-4"></i>
+                                                            <span>{{ $reservation->car->fuel_type }}</span>
+                                                        </div>
+                                                        @endif
+                                                        @if($reservation->car->transmission)
+                                                        <div class="detail-item">
+                                                            <i data-lucide="settings" class="tw-w-4 tw-h-4"></i>
+                                                            <span>{{ $reservation->car->transmission }}</span>
+                                                        </div>
+                                                        @endif
+                                                        <div class="detail-item">
+                                                            <i data-lucide="user-check" class="tw-w-4 tw-h-4"></i>
+                                                            <span>{{ $reservation->with_driver ? 'Avec chauffeur' : 'Sans chauffeur' }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                <!-- Informations de la voiture -->
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <div class="flex items-start space-x-6">
-                        @if($reservation->car->image)
-                            <img src="{{ Storage::url($reservation->car->image) }}" 
-                                 alt="{{ $reservation->car->brand }} {{ $reservation->car->model }}" 
-                                 class="w-32 h-24 object-cover rounded-lg">
-                        @else
-                            <div class="w-32 h-24 bg-gray-200 rounded-lg flex items-center justify-center">
-                                <i data-lucide="car" class="w-8 h-8 text-gray-400"></i>
-                            </div>
-                        @endif
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                                {{ $reservation->car->brand }} {{ $reservation->car->model }} 
-                                @if($reservation->car->year)
-                                    ({{ $reservation->car->year }})
-                                @endif
-                            </h3>
-                            <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                                @if($reservation->car->seats)
-                                <div class="flex items-center space-x-2">
-                                    <i data-lucide="users" class="w-4 h-4"></i>
-                                    <span>{{ $reservation->car->seats }} places</span>
-                                </div>
-                                @endif
-                                @if($reservation->car->fuel_type)
-                                <div class="flex items-center space-x-2">
-                                    <i data-lucide="fuel" class="w-4 h-4"></i>
-                                    <span>{{ $reservation->car->fuel_type }}</span>
-                                </div>
-                                @endif
-                                @if($reservation->car->transmission)
-                                <div class="flex items-center space-x-2">
-                                    <i data-lucide="settings" class="w-4 h-4"></i>
-                                    <span>{{ $reservation->car->transmission }}</span>
-                                </div>
-                                @endif
-                                <div class="flex items-center space-x-2">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i>
-                                    <span>{{ $reservation->with_driver ? 'Avec chauffeur' : 'Sans chauffeur' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        <!-- Période de réservation -->
+                                        <div class="card-wrapper tw-p-6">
+                                            <h3 class="section-title">Période de réservation</h3>
+                                            <div class="period-grid">
+                                                <div class="period-details">
+                                                    <div class="period-item">
+                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #10b981;"></i>
+                                                        <div>
+                                                            <div class="tw-font-medium tw-text-gray-900">Début</div>
+                                                            <div class="tw-text-gray-600">
+                                                                {{ \Carbon\Carbon::parse($reservation->reservation_start_date)->format('d/m/Y') }} 
+                                                                à {{ $reservation->reservation_start_time }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="period-item">
+                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #ef4444;"></i>
+                                                        <div>
+                                                            <div class="tw-font-medium tw-text-gray-900">Fin</div>
+                                                            <div class="tw-text-gray-600">
+                                                                {{ \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d/m/Y') }} 
+                                                                à {{ $reservation->reservation_end_time }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="duration-highlight">
+                                                    <div class="tw-text-2xl tw-font-bold" style="color: #2563eb;">{{ $reservation->total_days }}</div>
+                                                    <div class="tw-text-sm" style="color: #2563eb;">{{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                <!-- Détails de la période -->
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Période de réservation</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-3">
-                                <i data-lucide="calendar" class="w-5 h-5 text-green-500"></i>
-                                <div>
-                                    <div class="font-medium text-gray-900">Début</div>
-                                    <div class="text-gray-600">
-                                        {{ \Carbon\Carbon::parse($reservation->reservation_start_date)->format('d/m/Y') }} 
-                                        à {{ $reservation->reservation_start_time }}
+                                        <!-- Résumé financier -->
+                                        <div class="card-wrapper tw-p-6">
+                                            <h3 class="section-title">Résumé financier</h3>
+                                            <div class="tw-space-y-3">
+                                                <div class="summary-item">
+                                                    <span class="tw-text-gray-600">ID Réservation</span>
+                                                    <span class="tw-font-medium">#{{ $reservation->id }}</span>
+                                                </div>
+                                                <div class="summary-item">
+                                                    <span class="tw-text-gray-600">Durée</span>
+                                                    <span class="tw-font-medium">{{ $reservation->total_days }} {{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</span>
+                                                </div>
+                                                <div class="summary-item">
+                                                    <span class="tw-text-gray-600">Tarif journalier</span>
+                                                    <span class="tw-font-medium">{{ number_format($reservation->daily_rate, 0, ',', ' ') }} FCFA</span>
+                                                </div>
+                                                <div class="summary-item">
+                                                    <span class="tw-text-gray-600">Sous-total</span>
+                                                    <span class="tw-font-medium">{{ number_format($reservation->subtotal, 0, ',', ' ') }} FCFA</span>
+                                                </div>
+                                                @if($reservation->discount_percentage > 0)
+                                                <div class="summary-item" style="color: #16a34a;">
+                                                    <span>Remise ({{ $reservation->discount_percentage }}%)</span>
+                                                    <span>-{{ number_format($reservation->discount_amount, 0, ',', ' ') }} FCFA</span>
+                                                </div>
+                                                @endif
+                                                <div class="summary-item total-row tw-font-semibold tw-text-lg">
+                                                    <span>Total final</span>
+                                                    <span style="color: #2563eb;">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</span>
+                                                </div>
+                                                <div class="tw-text-center tw-mt-3">
+                                                    <span class="status-badge {{ $reservation->payment_status === 'paid' ? 'tw-bg-green-100 tw-text-green-800' : 'tw-bg-yellow-100 tw-text-yellow-800' }}">
+                                                        {{ $reservation->payment_status === 'paid' ? 'Payé' : 'En attente de paiement' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Extensions -->
+                                        @if(isset($reservation->extensions) && $reservation->extensions->count() > 0)
+                                        <div class="card-wrapper tw-p-6">
+                                            <h3 class="section-title">Extensions</h3>
+                                            <div class="tw-space-y-3">
+                                                @foreach($reservation->extensions as $extension)
+                                                <div class="extension-item">
+                                                    <div class="extension-left">
+                                                        <div class="extension-dot"></div>
+                                                        <div>
+                                                            <div class="tw-font-medium tw-text-gray-900">Extension #{{ $extension->id }}</div>
+                                                            <div class="tw-text-sm tw-text-gray-600">
+                                                                Du {{ \Carbon\Carbon::parse($extension->start_date)->format('d/m/Y H:i') }} 
+                                                                au {{ \Carbon\Carbon::parse($extension->end_date)->format('d/m/Y H:i') }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tw-text-right">
+                                                        <div class="tw-font-semibold tw-text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
+                                                        <div class="tw-text-xs {{ $extension->status === 'paid' ? 'tw-text-green-600' : 'tw-text-yellow-600' }}">
+                                                            {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+
+                                    <!-- Sidebar -->
+                                    <div class="sidebar-section">
+                                        <!-- Section Contrat de Réservation -->
+                                        <div class="card-wrapper tw-p-6">
+                                            <h3 class="section-title">
+                                                <i data-lucide="file-text" class="tw-w-5 tw-h-5"></i>
+                                                Contrat de Réservation
+                                            </h3>
+                                            
+                                            <div class="contract-info-box">
+                                                <div class="contract-info-header">
+                                                    <i data-lucide="info" class="tw-w-5 tw-h-5 tw-text-blue-500 tw-pt-0.5"></i>
+                                                    <div class="tw-flex-1">
+                                                        <h4 class="tw-font-medium tw-text-blue-900 tw-mb-1">Votre contrat de location</h4>
+                                                        <p class="tw-text-sm tw-text-blue-700">
+                                                            Consultez ou téléchargez votre contrat officiel de location avec tous les détails de votre réservation.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tw-space-y-2">
+                                                <!-- Bouton Voir le contrat -->
+                                                <a href="{{ route('reservations.contract.preview', $reservation) }}" 
+                                                target="_blank"
+                                                class="action-button btn-blue">
+                                                    <i data-lucide="eye" class="tw-w-4 tw-h-4 tw-mr-2 tw-inline"></i>
+                                                    Voir le contrat
+                                                </a>
+                                                
+                                                <!-- Bouton Télécharger PDF -->
+                                                <a href="{{ route('reservations.contract.download', $reservation) }}" 
+                                                class="action-button btn-red">
+                                                    <i data-lucide="download" class="tw-w-4 tw-h-4 tw-mr-2 tw-inline"></i>
+                                                    Télécharger PDF
+                                                </a>
+                                            </div>
+
+                                            <div class="tw-text-xs tw-text-gray-500 tw-text-center tw-mt-3">
+                                                <i data-lucide="shield-check" class="tw-w-3 tw-h-3 tw-inline tw-mr-1"></i>
+                                                Document officiel sécurisé
+                                            </div>
+                                        </div>
+
+                                        <!-- Actions -->
+                                        <div class="card-wrapper tw-p-6">
+                                            <h3 class="section-title">Actions</h3>
+                                            <div class="tw-space-y-3">
+                                                @if($reservation->status === 'pending')
+                                                <button onclick="confirmReservation()" class="action-button btn-green">
+                                                    Confirmer la réservation
+                                                </button>
+                                                @endif
+                                                <button onclick="downloadInvoice()" class="action-button btn-blue">
+                                                    Télécharger la facture
+                                                </button>
+                                                <a href="{{ route('reservations.index') }}" class="action-button btn-gray">
+                                                    Retour aux réservations
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center space-x-3">
-                                <i data-lucide="calendar" class="w-5 h-5 text-red-500"></i>
-                                <div>
-                                    <div class="font-medium text-gray-900">Fin</div>
-                                    <div class="text-gray-600">
-                                        {{ \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d/m/Y') }} 
-                                        à {{ $reservation->reservation_end_time }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <div class="text-center bg-blue-50 rounded-lg p-4">
-                                <div class="text-2xl font-bold text-blue-600">{{ $reservation->total_days }}</div>
-                                <div class="text-sm text-blue-600">{{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</div>
-                            </div>
                         </div>
                     </div>
                 </div>
-
-                                            <!-- Résumé de la réservation -->
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Résumé financier</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">ID Réservation</span>
-                            <span class="font-medium">#{{ $reservation->id }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Durée</span>
-                            <span class="font-medium">{{ $reservation->total_days }} {{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Tarif journalier</span>
-                            <span class="font-medium">{{ number_format($reservation->daily_rate, 0, ',', ' ') }} FCFA</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Sous-total</span>
-                            <span class="font-medium">{{ number_format($reservation->subtotal, 0, ',', ' ') }} FCFA</span>
-                        </div>
-                        @if($reservation->discount_percentage > 0)
-                        <div class="flex justify-between text-green-600">
-                            <span>Remise ({{ $reservation->discount_percentage }}%)</span>
-                            <span>-{{ number_format($reservation->discount_amount, 0, ',', ' ') }} FCFA</span>
-                        </div>
-                        @endif
-                        <hr class="my-3">
-                        <div class="flex justify-between font-semibold text-lg">
-                            <span>Total final</span>
-                            <span class="text-blue-600">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</span>
-                        </div>
-                        <div class="mt-3 text-center">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-medium {{ $reservation->payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                {{ $reservation->payment_status === 'paid' ? 'Payé' : 'En attente de paiement' }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Extensions -->
-                @if(isset($reservation->extensions) && $reservation->extensions->count() > 0)
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Extensions</h3>
-                    <div class="space-y-3">
-                        @foreach($reservation->extensions as $extension)
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <div>
-                                    <div class="font-medium text-gray-900">Extension #{{ $extension->id }}</div>
-                                    <div class="text-sm text-gray-600">
-                                        Du {{ \Carbon\Carbon::parse($extension->start_date)->format('d/m/Y H:i') }} 
-                                        au {{ \Carbon\Carbon::parse($extension->end_date)->format('d/m/Y H:i') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-semibold text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
-                                <div class="text-xs {{ $extension->status === 'paid' ? 'text-green-600' : 'text-yellow-600' }}">
-                                    {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-            </div>
-
-            <!-- Sidebar -->
-            <div class="space-y-6">
-                <!-- Section Contrat de Réservation -->
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        <i data-lucide="file-text" class="w-5 h-5 inline mr-2"></i>
-                        Contrat de Réservation
-                    </h3>
-                    
-                    <div class="space-y-3">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                            <div class="flex items-start space-x-3">
-                                <i data-lucide="info" class="w-5 h-5 text-blue-500 mt-0.5"></i>
-                                <div class="flex-1">
-                                    <h4 class="font-medium text-blue-900 mb-1">Votre contrat de location</h4>
-                                    <p class="text-sm text-blue-700">
-                                        Consultez ou téléchargez votre contrat officiel de location avec tous les détails de votre réservation.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 gap-2">
-                            <!-- Bouton Voir le contrat -->
-                            <a href="{{ route('reservations.contract.preview', $reservation) }}" 
-                            target="_blank"
-                            class="flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
-                                Voir le contrat
-                            </a>
-                            
-                            <!-- Bouton Télécharger PDF -->
-                            <a href="{{ route('reservations.contract.download', $reservation) }}" 
-                            class="flex items-center justify-center w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                                Télécharger PDF
-                            </a>
-                        </div>
-
-                        <div class="text-xs text-gray-500 text-center mt-3">
-                            <i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i>
-                            Document officiel sécurisé
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="bg-white rounded-xl shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
-                    <div class="space-y-3">
-                        @if($reservation->status === 'pending')
-                        <button onclick="confirmReservation()" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
-                            Confirmer la réservation
-                        </button>
-                        @endif
-                        <!-- @if(in_array($reservation->status, ['pending', 'active']))
-                        <button onclick="cancelReservation()" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                            Annuler la réservation
-                        </button>
-                        @endif -->
-                        <button onclick="downloadInvoice()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                            Télécharger la facture
-                        </button>
-                        <a href="{{ route('reservations.index') }}" class="block w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-center">
-                            Retour aux réservations
-                        </a>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
+        <!-- content close -->
+
+        <a href="{{ asset('#') }}" id="back-to-top"></a>
+        
+        <!-- footer begin -->
+        @include('partials.footer')
+        <!-- footer close -->
+        
+    </div>
+
+
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="{{ asset('js/plugins.js') }}"></script>
+    <script src="{{ asset('js/designesia.js') }}"></script>
 
     <script>
         // Initialiser Lucide
@@ -469,32 +1164,6 @@
         // Démarrer le compte à rebours au chargement
         document.addEventListener('DOMContentLoaded', startCountdown);
     </script>
-                        </div>
-
-                        </div>
-                   
-                </div>
-            </section>
-			
-			
-        </div>
-        <!-- content close -->
-
-        <a href="{{ asset('#') }}" id="back-to-top"></a>
-        
-        <!-- footer begin -->
-        @include('partials.footer')
-        <!-- footer close -->
-        
-    </div>
-
-
-    <!-- Javascript Files
-    ================================================== -->
-    <script src="{{ asset('js/plugins.js') }}"></script>
-    <script src="{{ asset('js/designesia.js') }}"></script>
-
-    
 
 </body>
 
