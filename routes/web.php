@@ -83,7 +83,7 @@ Route::middleware(['auth', 'verified', 'client'])->group(function () {
         Route::get('/create/{car}', [ReservationController::class, 'create'])->name('create');
         Route::post('/', [ReservationController::class, 'store'])->name('store');
             // Routes pour les extensions
-    Route::get('/{reservation}/extend', [ReservationController::class, 'showExtendForm'])->name('form');
+    Route::get('/{reservation}/extend/form', [ReservationController::class, 'showExtendForm'])->name('extend.form');
     Route::post('/{reservation}/extend', [ReservationController::class, 'extend'])->name('extend');
 
         Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');

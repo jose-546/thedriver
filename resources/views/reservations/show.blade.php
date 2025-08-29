@@ -104,7 +104,7 @@
         }
         
         .tw-space-y-3 > * + * {
-            margin-top: 0.75rem;
+            margin-top: 0rem;
         }
         
         .tw-space-y-4 > * + * {
@@ -291,7 +291,7 @@
         }
         
         .tw-bg-blue-600 {
-            background-color: #2563eb;
+            background-color: #860000;
         }
         
         .tw-bg-red-600 {
@@ -303,7 +303,7 @@
         }
         
         .tw-bg-gray-600 {
-            background-color: #4b5563;
+            background-color: #121212;
         }
         
         .tw-bg-gray-50 {
@@ -376,7 +376,7 @@
         }
         
         .tw-text-gray-600 {
-            color: #4b5563;
+            color: #121212;
         }
         
         .tw-text-gray-500 {
@@ -388,19 +388,19 @@
         }
         
         .tw-text-blue-600 {
-            color: #2563eb;
+            color: #860000;
         }
         
         .tw-text-blue-500 {
-            color: #3b82f6;
+            color: #860000;
         }
         
         .tw-text-blue-900 {
-            color: #1e3a8a;
+            color: #000000ff;
         }
         
         .tw-text-blue-700 {
-            color: #1d4ed8;
+            color: #000000ff;
         }
         
         .tw-text-red-600 {
@@ -521,7 +521,7 @@
         .car-details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 0.35rem;
         }
 
         .detail-item {
@@ -552,8 +552,9 @@
         }
 
         .duration-highlight {
-            background: #dbeafe;
+            background: #ffb30018;
             border-radius: 0.5rem;
+            border: 1px solid #ffb400;
             padding: 1rem;
             text-align: center;
             min-width: 80px;
@@ -574,7 +575,7 @@
 
         .status-badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 2rem;
             border-radius: 9999px;
             font-size: 0.75rem;
             font-weight: 500;
@@ -608,7 +609,7 @@
             display: block;
             width: 100%;
             text-align: center;
-            padding: 0.75rem 1rem;
+            padding: 0.50rem 1rem;
             border-radius: 0.5rem;
             text-decoration: none;
             font-weight: 500;
@@ -619,23 +620,27 @@
         }
 
         .btn-blue {
-            background: #2563eb;
+            background: #860000;
             color: white;
         }
 
         .btn-blue:hover {
-            background: #1d4ed8;
-            color: white;
+            color: #fff;
+            -webkit-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326); /* #860000 en rgba */
+            -moz-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
+            box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
         }
 
         .btn-red {
-            background: #dc2626;
+            background: #121212;
             color: white;
         }
 
         .btn-red:hover {
-            background: #b91c1c;
-            color: white;
+            color: #fff;
+            -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
         }
 
         .btn-green {
@@ -649,18 +654,20 @@
         }
 
         .btn-gray {
-            background: #4b5563;
+            background: #000000ff;
             color: white;
         }
 
-        .btn-gray:hover {
-            background: #374151;
-            color: white;
+        .btn-z:hover {
+            color: #fff;
+            -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
         }
 
         .contract-info-box {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background: #ffb30026;
+            border: 1px solid #ffb400;
             border-radius: 0.5rem;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -733,18 +740,48 @@
                                     </div>
                                     <div class="profile_name">
                                         <h4>
-                                            Monica Lucas                                                
-                                            <span class="profile_username text-gray">monica@rentaly.com</span>
+                                            {{ auth()->user()->username }}                                                  
+                                            <span class="profile_username text-gray">{{ auth()->user()->email }}</span>
                                         </h4>
                                     </div>
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a href="" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
-                                    <li><a href="{{ asset('account-profile.html') }}"><i class="fa fa-user"></i>My Profile</a></li>
-                                    <li><a href="{{ asset('account-booking.html') }}"><i class="fa fa-calendar"></i>My Orders</a></li>
-                                    <li><a href="{{ asset('account-favorite.html') }}"><i class="fa fa-car"></i>My Favorite Cars</a></li>
-                                    <li><a href="{{ asset('login.html') }}"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                                    <li>
+                                        <a href="{{ route('dashboard') }}" 
+                                        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                                        <i class="fa fa-home"></i> Tableau de bord
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('profile.edit') }}" 
+                                        class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                                        <i class="fa fa-user"></i> Mon Profil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('reservations.index') }}" 
+                                        class="{{ request()->routeIs('reservations.index') ? 'active' : '' }}">
+                                        <i class="fa fa-calendar"></i> Mes Réservations
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('cars.search') }}" 
+                                        class="{{ request()->routeIs('cars.search') ? 'active' : '' }}">
+                                        <i class="fa fa-car"></i> Voitures Disponibles
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fa fa-sign-out"></i> Déconnexion
+                                            </button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -782,24 +819,35 @@
                                                     <div class="car-details-grid">
                                                         @if($reservation->car->seats)
                                                         <div class="detail-item">
-                                                            <i data-lucide="users" class="tw-w-4 tw-h-4"></i>
+                                                            <i data-lucide="users" class="tw-w-4 tw-h-4" style="color:#860000;"></i>
+                                                            	
                                                             <span>{{ $reservation->car->seats }} places</span>
                                                         </div>
                                                         @endif
                                                         @if($reservation->car->fuel_type)
                                                         <div class="detail-item">
-                                                            <i data-lucide="fuel" class="tw-w-4 tw-h-4"></i>
+                                                            <div class="d-atr-group tw-flex tw-flex-wrap tw-gap-2 tw-mb-3">
+                                                                <span class="dooo tw-flex tw-items-center tw-gap-1">
+                                                                    <img src="{{ asset('images/icons/2-green.png') }}" alt="">
+                                                                </span>
+                                                            </div>
                                                             <span>{{ $reservation->car->fuel_type }}</span>
                                                         </div>
                                                         @endif
                                                         @if($reservation->car->transmission)
                                                         <div class="detail-item">
-                                                            <i data-lucide="settings" class="tw-w-4 tw-h-4"></i>
+                                                            
+                                                            <div class="d-atr-group tw-flex tw-flex-wrap tw-gap-2 tw-mb-3">
+                                                       
+                                                        <span class="dooo tw-flex tw-items-center tw-gap-1">
+                                                            <img src="{{ asset('images/icons/4-green.png') }}" alt="">
+                                                        </span>
+                                                    </div>
                                                             <span>{{ $reservation->car->transmission }}</span>
                                                         </div>
                                                         @endif
                                                         <div class="detail-item">
-                                                            <i data-lucide="user-check" class="tw-w-4 tw-h-4"></i>
+                                                            <i data-lucide="user-check" class="tw-w-4 tw-h-4" style="color:#860000;"></i>
                                                             <span>{{ $reservation->with_driver ? 'Avec chauffeur' : 'Sans chauffeur' }}</span>
                                                         </div>
                                                     </div>
@@ -813,7 +861,7 @@
                                             <div class="period-grid">
                                                 <div class="period-details">
                                                     <div class="period-item">
-                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #10b981;"></i>
+                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #860000;"></i>
                                                         <div>
                                                             <div class="tw-font-medium tw-text-gray-900">Début</div>
                                                             <div class="tw-text-gray-600">
@@ -823,7 +871,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="period-item">
-                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #ef4444;"></i>
+                                                        <i data-lucide="calendar" class="tw-w-5 tw-h-5" style="color: #860000;"></i>
                                                         <div>
                                                             <div class="tw-font-medium tw-text-gray-900">Fin</div>
                                                             <div class="tw-text-gray-600">
@@ -834,8 +882,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="duration-highlight">
-                                                    <div class="tw-text-2xl tw-font-bold" style="color: #2563eb;">{{ $reservation->total_days }}</div>
-                                                    <div class="tw-text-sm" style="color: #2563eb;">{{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</div>
+                                                    <div class="tw-text-2xl tw-font-bold" style="color: #860000;">{{ $reservation->total_days }}</div>
+                                                    <div class="tw-text-sm" style="color: #860000;">{{ $reservation->total_days > 1 ? 'jours' : 'jour' }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -868,7 +916,7 @@
                                                 @endif
                                                 <div class="summary-item total-row tw-font-semibold tw-text-lg">
                                                     <span>Total final</span>
-                                                    <span style="color: #2563eb;">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</span>
+                                                    <span style="color: #860000;">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</span>
                                                 </div>
                                                 <div class="tw-text-center tw-mt-3">
                                                     <span class="status-badge {{ $reservation->payment_status === 'paid' ? 'tw-bg-green-100 tw-text-green-800' : 'tw-bg-yellow-100 tw-text-yellow-800' }}">
@@ -896,9 +944,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="tw-text-right">
-                                                        <div class="tw-font-semibold tw-text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
-                                                        <div class="tw-text-xs {{ $extension->status === 'paid' ? 'tw-text-green-600' : 'tw-text-yellow-600' }}">
-                                                            {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
+                                                        <div class="tw-font-semibold tw-text-gray-900">{{ number_format($extension->final_total, 0, ',', ' ') }} FCFA</div>
+                                                        <div class="tw-text-xs {{ $extension->payment_status === 'paid' ? 'tw-text-green-600' : 'tw-text-yellow-600' }}">
+                                                            {{ $extension->payment_status === 'paid' ? 'Payé' : 'En attente' }}
                                                         </div>
                                                     </div>
                                                 </div>

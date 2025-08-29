@@ -426,44 +426,50 @@ class ReservationController extends Controller
         }
     }
 
-    /**
-     * Affiche la liste des réservations de l'utilisateur
-     */
-    public function index()
-    {
-        $user = Auth::user();
-        
-        // Réservations actives
-        $activeReservations = $user->reservations()
-            ->with('car')
-            ->where('status', 'active')
-            ->where('payment_status', 'paid')
-            ->orderBy('reservation_end_date', 'asc')
-            ->orderBy('reservation_end_time', 'asc')
-            ->get();
-        
-        // Réservations en attente de paiement
-        $pendingReservations = $user->reservations()
-            ->with('car')
-            ->where('status', 'pending')
-            ->where('payment_status', 'pending')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
-        // Réservations passées/terminées
-        $pastReservations = $user->reservations()
-            ->with('car')
-            ->whereIn('status', ['expired', 'completed'])
-            ->orderBy('reservation_end_date', 'desc')
-            ->orderBy('reservation_end_time', 'desc')
-            ->paginate(10);
-        
-        return view('reservations.index', compact(
-            'activeReservations', 
-            'pendingReservations', 
-            'pastReservations'
-        ));
-    }
+/**
+ * Affiche la liste des réservations de l'utilisateur
+ */
+public function index()
+{
+    $user = Auth::user();
+    
+    // Réservations actives (avec distinction entre en cours et programmées)
+    $activeReservations = $user->reservations()
+        ->with('car')
+        ->where('status', 'active')
+        ->where('payment_status', 'paid')
+        ->orderBy('reservation_end_date', 'asc')
+        ->orderBy('reservation_end_time', 'asc')
+        ->get()
+        ->map(function($reservation) {
+            // Ajouter des propriétés pour simplifier la vue
+            $reservation->isActive = $reservation->isActive();
+            $reservation->isScheduled = $reservation->isScheduled();
+            return $reservation;
+        });
+    
+    // Réservations en attente de paiement
+    $pendingReservations = $user->reservations()
+        ->with('car')
+        ->where('status', 'pending')
+        ->where('payment_status', 'pending')
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    // Réservations passées/terminées avec pagination
+    $pastReservations = $user->reservations()
+        ->with('car')
+        ->whereIn('status', ['expired', 'completed'])
+        ->orderBy('reservation_end_date', 'desc')
+        ->orderBy('reservation_end_time', 'desc')
+        ->get(); // Retirer paginate(10) pour simplifier la vue
+    
+    return view('reservations.index', compact(
+        'activeReservations', 
+        'pendingReservations', 
+        'pastReservations'
+    ));
+}
 
     /**
      * Affiche les détails d'une réservation
@@ -493,7 +499,7 @@ class ReservationController extends Controller
                 ->with('error', 'Cette réservation ne peut plus être annulée.');
         }
 
-        // 🔥 CORRECTION : Remettre la voiture disponible lors de l'annulation
+        // CORRECTION : Remettre la voiture disponible lors de l'annulation
         if ($reservation->car) {
             $reservation->car->update(['status' => 'available']);
             Log::info('Voiture remise disponible après annulation', [
@@ -903,13 +909,14 @@ class ReservationController extends Controller
             'extension_days' => 'required|integer|min:1|max:30',
             'client_email' => 'required|email',
             'client_phone' => 'required|string|min:8',
+            'client_location' => 'required|string|max:255',  // AJOUT
+            'deployment_zone' => 'required|string|max:255',  // AJOUT
             'terms_accepted' => 'required|accepted'
         ]);
         
         // Calculer les nouvelles dates
         $currentEndDateTime = $reservation->getEndDateTime();
-        $newEndDateTime = $currentEndDateTime->copy()->addDays($request->extension_days);
-        
+        $newEndDateTime = $currentEndDateTime->copy()->addDays((int) $request->extension_days);        
         Log::info('Calcul extension:', [
             'current_end' => $currentEndDateTime->toDateTimeString(),
             'new_end' => $newEndDateTime->toDateTimeString(),
@@ -955,6 +962,8 @@ class ReservationController extends Controller
             'terms_accepted' => true,
             'client_email' => $request->client_email,
             'client_phone' => $request->client_phone,
+            'client_location' => $request->client_location, // AJOUT
+            'deployment_zone' => $reservation->deployment_zone ?? 'Default',
             'extension_of' => $reservation->id, // 🔗 Lien vers la réservation originale
         ]);
         
