@@ -226,383 +226,218 @@
         
 
 /* code pour personnaliser calandrier */
-/* ===== CALENDRIER FLATPICKR - DESIGN PROFESSIONNEL ===== */
-
-/* Variables CSS pour une cohérence parfaite */
 :root {
-  --primary-red: #860000;
-  --primary-red-light: #a61010;
-  --primary-red-dark: #650000;
-  --accent-gold: #d4af37;
-  --accent-gold-light: #e4c547;
-  --neutral-white: #ffffff;
-  --neutral-gray-50: #f8fafc;
-  --neutral-gray-100: #f1f5f9;
-  --neutral-gray-200: #e2e8f0;
-  --neutral-gray-300: #cbd5e1;
-  --neutral-gray-700: #374151;
-  --neutral-gray-900: #111827;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --border-radius: 12px;
-  --border-radius-sm: 8px;
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+            --primary-color: #860000;
+            --text-color: #000000;
+            --bg-color: #ffffff;
+            --border-color: #e0e0e0;
+            --hover-color: #f5f5f5;
+            --disabled-color: #cccccc;
+        }
 
-/* === CONTENEUR PRINCIPAL === */
-.flatpickr-calendar {
-  background: var(--neutral-white);
-  border: 1px solid var(--neutral-gray-200);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-xl);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
-  z-index: 9999 !important;
-  overflow: hidden;
-  min-width: 320px;
-}
+        /* === CONTENEUR PRINCIPAL === */
+        .flatpickr-calendar {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            width: 320px;
+            z-index: 9999 !important;
+        }
 
-/* === EN-TÊTE DU CALENDRIER === */
-.flatpickr-months {
-  background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
-  padding: 16px 20px;
-  position: relative;
-}
+        /* === EN-TÊTE DU CALENDRIER === */
+        .flatpickr-months {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            border-radius: 8px 8px 0 0;
+        }
 
-.flatpickr-month {
-  background: transparent !important;
-  color: var(--neutral-white);
-}
+        .flatpickr-month {
+            color: white;
+            fill: white;
+            height: 34px;
+        }
 
-.flatpickr-current-month {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
+        .flatpickr-current-month {
+            font-size: 14px;
+            font-weight: 600;
+            padding-top: 4px;
+        }
 
-/* === SÉLECTEURS MOIS/ANNÉE === */
-.flatpickr-monthDropdown-months,
-.flatpickr-current-month input.cur-year {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--border-radius-sm);
-  color: var(--neutral-white);
-  font-weight: 600;
-  font-size: 16px;
-  padding: 8px 12px;
-  transition: var(--transition);
-  outline: none;
-}
+        .flatpickr-monthDropdown-months,
+        .flatpickr-current-month input.cur-year {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 4px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
 
-.flatpickr-monthDropdown-months:hover,
-.flatpickr-current-month input.cur-year:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
-}
+        .flatpickr-monthDropdown-months:hover,
+        .flatpickr-current-month input.cur-year:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-.flatpickr-monthDropdown-months:focus,
-.flatpickr-current-month input.cur-year:focus {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
-}
+        /* Options du sélecteur de mois */
+        .flatpickr-monthDropdown-months option {
+            background: white;
+            color: var(--text-color);
+        }
 
-/* Options du sélecteur de mois */
-.flatpickr-monthDropdown-months option {
-  background: var(--neutral-white);
-  color: var(--primary-red);
-  padding: 8px 12px;
-}
+        /* === BOUTONS DE NAVIGATION === */
+        .flatpickr-prev-month,
+        .flatpickr-next-month {
+            color: white !important;
+            fill: white !important;
+            padding: 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
 
-.flatpickr-monthDropdown-months option:hover {
-  background: var(--neutral-gray-50);
-}
+        .flatpickr-prev-month:hover,
+        .flatpickr-next-month:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-/* === BOUTONS DE NAVIGATION === */
-.flatpickr-prev-month,
-.flatpickr-next-month {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--neutral-white) !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  backdrop-filter: blur(10px);
-}
+        /* === CORPS DU CALENDRIER === */
+        .flatpickr-innerContainer {
+            padding: 12px;
+            background: var(--bg-color);
+        }
 
-.flatpickr-prev-month {
-  left: 20px;
-}
+        /* === JOURS DE LA SEMAINE === */
+        .flatpickr-weekdays {
+            background: var(--bg-color);
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
 
-.flatpickr-next-month {
-  right: 20px;
-}
+        .flatpickr-weekday {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
 
-.flatpickr-prev-month:hover,
-.flatpickr-next-month:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold) !important;
-  transform: translateY(-50%) scale(1.05);
-}
+        /* Assurer que la colonne du dimanche a la même taille */
+        .flatpickr-weekday:nth-child(1) {
+            min-width: 40px;
+        }
 
-/* === CORPS DU CALENDRIER === */
-.flatpickr-innerContainer {
-  background: var(--neutral-white);
-  padding: 20px;
-}
+        /* === GRILLE DES JOURS === */
+        .flatpickr-days {
+            border: none;
+        }
 
-/* === JOURS DE LA SEMAINE === */
-.flatpickr-weekdays {
-  background: var(--neutral-gray-50);
-  border-radius: var(--border-radius-sm);
-  margin-bottom: 12px;
-  padding: 12px 0;
-}
+        .dayContainer {
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+            padding: 0;
+        }
 
-.flatpickr-weekday {
-  color: var(--primary-red);
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  text-align: center;
-}
+        /* === STYLES DES JOURS === */
+        .flatpickr-day {
+            color: var(--text-color);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            height: 40px;
+            line-height: 40px;
+            max-width: 40px;
+            margin: 2px;
+            font-weight: 400;
+        }
 
-/* === GRILLE DES JOURS === */
-.flatpickr-days {
-  width: 100%;
-}
+        /* Taille égale pour tous les jours, y compris le dimanche */
+        .flatpickr-day, .flatpickr-day.flatpickr-sunday {
+            width: 40px;
+            flex-basis: 40px;
+        }
 
-.dayContainer {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  max-width: none;
-  min-width: none;
-  width: 100%;
-}
+        /* Jour au survol */
+        .flatpickr-day:hover {
+            background: var(--hover-color);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
 
-/* === STYLES DES JOURS === */
-.flatpickr-day {
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: var(--border-radius-sm);
-  color: var(--neutral-gray-700);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  height: 40px;
-  line-height: 1;
-  margin: 0;
-  transition: var(--transition);
-  width: 40px;
-  position: relative;
-}
+        /* Jour aujourd'hui */
+        .flatpickr-day.today {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
 
-/* Jour au survol */
-.flatpickr-day:hover:not(.selected):not(.disabled) {
-  background: var(--neutral-gray-100);
-  border-color: var(--primary-red);
-  color: var(--primary-red);
-  transform: scale(1.05);
-}
+        /* Jour sélectionné */
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
 
-/* Jour aujourd'hui */
-.flatpickr-day.today {
-  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-  border-color: var(--accent-gold);
-  color: var(--neutral-white);
-  font-weight: 700;
-  position: relative;
-}
+        /* Plage de dates */
+        .flatpickr-day.inRange {
+            background: rgba(134, 0, 0, 0.1);
+            border-color: rgba(134, 0, 0, 0.2);
+            color: var(--text-color);
+        }
 
-.flatpickr-day.today::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--neutral-white);
-  border-radius: 50%;
-}
+        /* Jours désactivés */
+        .flatpickr-day.disabled,
+        .flatpickr-day.disabled:hover {
+            color: var(--disabled-color);
+            cursor: not-allowed;
+        }
 
-/* Jour sélectionné */
-.flatpickr-day.selected,
-.flatpickr-day.startRange,
-.flatpickr-day.endRange {
-  background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-light) 100%) !important;
-  border-color: var(--primary-red) !important;
-  color: var(--neutral-white) !important;
-  font-weight: 700;
-  box-shadow: var(--shadow-md);
-  transform: scale(1.05);
-}
+        /* Jours des mois précédent/suivant */
+        .flatpickr-day.prevMonthDay,
+        .flatpickr-day.nextMonthDay {
+            color: var(--disabled-color);
+        }
 
-/* Plage de dates */
-.flatpickr-day.inRange {
-  background: rgba(134, 0, 0, 0.1) !important;
-  border-color: rgba(134, 0, 0, 0.2) !important;
-  color: var(--primary-red) !important;
-}
+        /* === CHAMP D'ENTRÉE === */
+        .flatpickr-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
 
-/* Jour aujourd'hui sélectionné */
-.flatpickr-day.today.selected {
-  background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-gold) 100%) !important;
-  border-color: var(--primary-red) !important;
-  color: var(--neutral-white) !important;
-}
+        .flatpickr-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
 
-/* Jours désactivés */
-.flatpickr-day.disabled,
-.flatpickr-day.disabled:hover {
-  background: transparent;
-  border-color: transparent;
-  color: var(--neutral-gray-300);
-  cursor: not-allowed;
-  transform: none;
-}
+        /* === RESPONSIVE === */
+        @media (max-width: 480px) {
+            .flatpickr-calendar {
+                width: 280px;
+                font-size: 13px;
+            }
+            
+            .flatpickr-day {
+                height: 36px;
+                line-height: 36px;
+                max-width: 36px;
+            }
+            
+            .flatpickr-day, .flatpickr-day.flatpickr-sunday {
+                width: 36px;
+                flex-basis: 36px;
+            }
+        }
 
-/* Jours des mois précédent/suivant */
-.flatpickr-day.prevMonthDay,
-.flatpickr-day.nextMonthDay {
-  color: var(--neutral-gray-300);
-}
-
-.flatpickr-day.prevMonthDay:hover,
-.flatpickr-day.nextMonthDay:hover {
-  color: var(--neutral-gray-700);
-}
-
-/* === CHAMP D'ENTRÉE === */
-.flatpickr-input {
-  border: 2px solid var(--neutral-gray-200);
-  border-radius: var(--border-radius-sm);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 12px 16px;
-  transition: var(--transition);
-  background: var(--neutral-white);
-  color: var(--neutral-gray-700);
-}
-
-.flatpickr-input:hover {
-  border-color: var(--neutral-gray-300);
-}
-
-.flatpickr-input:focus {
-  border-color: var(--primary-red) !important;
-  box-shadow: 0 0 0 3px rgba(134, 0, 0, 0.1) !important;
-  outline: none !important;
-}
-
-/* === ANIMATIONS ET TRANSITIONS === */
-.flatpickr-calendar.animate.open {
-  animation: flatpickrFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.flatpickr-calendar.animate.close {
-  animation: flatpickrFadeOut 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes flatpickrFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes flatpickrFadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.95);
-  }
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 480px) {
-  .flatpickr-calendar {
-    min-width: 280px;
-    font-size: 13px;
-  }
-  
-  .flatpickr-months {
-    padding: 12px 16px;
-  }
-  
-  .flatpickr-innerContainer {
-    padding: 16px;
-  }
-  
-  .flatpickr-day {
-    width: 36px;
-    height: 36px;
-    font-size: 13px;
-  }
-  
-  .flatpickr-prev-month,
-  .flatpickr-next-month {
-    width: 32px;
-    height: 32px;
-  }
-  
-  .flatpickr-prev-month {
-    left: 16px;
-  }
-  
-  .flatpickr-next-month {
-    right: 16px;
-  }
-}
-
-/* === MODE SOMBRE (OPTIONNEL) === */
-@media (prefers-color-scheme: dark) {
-  .flatpickr-calendar.dark-theme {
-    background: var(--neutral-gray-900);
-    border-color: var(--neutral-gray-700);
-  }
-  
-  .flatpickr-innerContainer.dark-theme {
-    background: var(--neutral-gray-900);
-  }
-  
-  .flatpickr-weekdays.dark-theme {
-    background: var(--neutral-gray-800);
-  }
-  
-  .flatpickr-day.dark-theme {
-    color: var(--neutral-gray-200);
-  }
-  
-  .flatpickr-day.dark-theme:hover:not(.selected):not(.disabled) {
-    background: var(--neutral-gray-700);
-  }
-}
 /* code pour personnaliser calandrier */
 
 
@@ -989,7 +824,7 @@
 
                                                                     <!-- Informations de Localisation -->
                                                                     <h5>Votre position (Où êtes-vous ?)</h5>
-                                                                    <div class="row g-4 mb-4">
+                                                                    <div class="row g-4">
                                                                         <div class="col-lg-12">
                                                                             <div class="field-set">
                                                                                 <input type="text" name="client_location" id="client_location" 
@@ -1004,7 +839,7 @@
                                                                     </div>
 
                                                                     <h5>Zone de déplacement</h5>
-                                                                    <div class="row g-4 mb-4">
+                                                                    <div class="row g-4">
                                                                         <div class="col-lg-12">
                                                                             <div class="field-set">
                                                                                 <!-- Select original caché pour maintenir la compatibilité backend -->
@@ -1052,7 +887,7 @@
                                                                     </div>
 
                                                                     <!-- Informations Client -->
-                                                                    <div class="row g-4 mb-4">
+                                                                    <div class="row g-4">
                                                                         <div class="col-lg-6">
                                                                             <div class="field-set">
                                                                                 <h5>Numéro</h5>
@@ -1166,7 +1001,7 @@
                                                                     Vous devez accepter les conditions pour continuer.
                                                                 </div>
                                                             </div>
-                                                            <button type="button" id="submitBtn" class="btn-main btn-fullwidth" disabled>
+                                                            <button type="button" id="submitBtn" class="btn-main  btn-sk btn-fullwidth" disabled>
                                                               Procéder au paiement
                                                             </button>
 

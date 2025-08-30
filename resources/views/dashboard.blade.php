@@ -166,8 +166,7 @@
     .section-card {
         background: var(--white);
         border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        border: 1px solid var(--gray-200);
+        border : 1px solid #860000;
         margin-bottom: 2rem;
         overflow: hidden;
     }
@@ -175,7 +174,7 @@
     .section-header {
         padding: 1.5rem 2rem;
         border-bottom: 1px solid var(--gray-200);
-        background: var(--gray-50);
+        background: #860000;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -185,7 +184,7 @@
         font-size: 1.25rem;
         font-weight: 600;
         margin: 0;
-        color: var(--gray-900);
+        color: white;
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -250,18 +249,13 @@
 
     /* Réservations actives */
     .active-reservation {
-        background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
-        border: 1px solid var(--gray-200);
+        background: #cfcfcf26;
         border-radius: var(--border-radius);
         padding: 2rem;
         margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
     }
 
-    .active-reservation:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-    }
+   
 
     .reservation-header {
         display: flex;
@@ -294,8 +288,8 @@
     }
 
     .status-active {
-        background-color: #dcfce7;
-        color: #166534;
+        background-color: #28a745;
+        color: white;
     }
 
     .status-pending {
@@ -423,14 +417,14 @@
     .countdown-timer {
         text-align: center;
         font-size: 1.75rem;
-        font-weight: 800;
+        font-weight: 700;
         margin-bottom: 1rem;
         transition: color 0.3s ease;
         padding: 1rem;
         background: rgba(255, 255, 255, 0.8);
         border-radius: var(--border-radius-sm);
         border: 1px solid var(--gray-200);
-        font-family: 'Courier New', monospace;
+        font-family: 'Outfit', monospace;
         letter-spacing: 0.1em;
     }
 
@@ -448,7 +442,7 @@
     }
 
     .countdown-timer.text-green {
-        color: var(--success-color);
+        color: #28a745;
     }
 
     /* Actions des réservations */
@@ -475,7 +469,7 @@
     }
 
     .btn-sm {
-        padding: 0.75rem 1.5rem;
+        padding: 0.50rem 1.5rem;
         font-size: 0.875rem;
         border-radius: var(--border-radius-sm);
         text-decoration: none;
@@ -493,23 +487,23 @@
     }
 
     .btn-blue:hover {
-        background-color: #860000;
-        color: var(--white);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-md);
+        color: #fff;
+        -webkit-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326); /* #860000 en rgba */
+        -moz-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
+        box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
     }
 
     .bg-orange-500 {
-        background-color: var(--warning-color);
+        background-color: black;
         color: var(--white);
     }
 
-    .bg-orange-500:hover {
-        background-color: #ffb400;
-        color: var(--white);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-md);
-    }
+    .btn-orange:hover {
+            color: #fff;
+            -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.2);
+        }
 
     .bg-gray-200 {
         background-color: var(--gray-200);
@@ -623,29 +617,12 @@
         <div id="de-preloader"></div>
         <!-- page preloader close -->
 
-         <!-- header begin -->
-         @include('partials.headerblanc')
-         <!-- header close -->
 
         <!-- content begin -->
         <div class="no-bottom no-top zebra" id="content">
             <div id="top"></div>
             
-            <!-- section begin -->
-            <section id="subheader" class="jarallax text-light">
-                <img src="{{ asset('images/background/14.jpg') }}" class="jarallax-img" alt="">
-                    <div class="center-y relative text-center">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-									<h1>Dashboard</h1>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-            </section>
-            <!-- section close -->
+          
 
             <section id="section-cars" class="bg-gray-100">
                 <div class="container">
@@ -665,13 +642,39 @@
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a href="" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
-                                    <li><a href="{{ asset('account-profile.html') }}"><i class="fa fa-user"></i>My Profile</a></li>
-                                    <li><a href="{{ asset('account-booking.html') }}"><i class="fa fa-calendar"></i>My Orders</a></li>
-                                    <li><a href="{{ asset('account-favorite.html') }}"><i class="fa fa-car"></i>My Favorite Cars</a></li>
-                                    <li><a href="{{ asset('login.html') }}"><i class="fa fa-sign-out"></i>Sign Out</a></li>
-                                </ul>
+    <li>
+        <a href="{{ route('dashboard') }}" class="active">
+            <i class="fa fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li>
+        <a href="{{ asset('account-profile.html') }}">
+            <i class="fa fa-user"></i> My Profile
+        </a>
+    </li>
+    <li>
+        <a href="{{ asset('account-booking.html') }}">
+            <i class="fa fa-calendar"></i> My Orders
+        </a>
+    </li>
+    <li>
+        <a href="{{ asset('account-favorite.html') }}">
+            <i class="fa fa-car"></i> My Favorite Cars
+        </a>
+    </li>
+    <li>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="dropdown-item">
+                <i class="fa fa-sign-out"></i> Déconnexion
+            </button>
+        </form>
+    </li>
+</ul>
+
                             </div>
+
+                            
                         </div>
 
                         <div class="col-lg-9">
@@ -682,7 +685,7 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar-check-o"></i>
                                         </div>
-                                        <span class="h1 mb0">
+                                        <span class="hee1 mb0">
                                         @php
                                             $activeCount = auth()->user()->reservations()
                                                 ->where('status', 'active')
@@ -701,7 +704,7 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-tags"></i>
                                         </div>
-                                        <span class="h1 mb0">12</span>
+                                        <span class="hee1 mb0">12</span>
                                         <span class="text-gray">Coupons</span>
                                     </div>
                                 </div>
@@ -711,7 +714,7 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar"></i>
                                         </div>
-                                        <span class="h1 mb0">
+                                        <span class="hee1 mb0">
                                             {{ auth()->user()->reservations()->count() }}
                                         </span>
                                         <span class="text-gray">Total réservations</span>
@@ -723,7 +726,7 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-calendar-times-o"></i>
                                         </div>
-                                        <span class="h1 mb0">
+                                        <span class="hee1 mb0">
                                             {{ number_format(auth()->user()->reservations()->where('payment_status', 'paid')->sum('final_total'), 0, ',', ' ') }}
                                         </span>
                                         <span class="text-gray">FCFA dépensés</span>
@@ -930,23 +933,23 @@
                                     <table class="table de-table">
                                     <thead>
                                         <tr>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Voiture</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Imatriculation</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Nombre de jours</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Prix payé</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Date et heure de début</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Date et heure de fin</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Véhicule</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">N° Plaque</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Jours</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Début</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Fin</span></th>
                                         <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                        <td><span class="d-lg-none d-sm-block">Voiture</span><div class="badge bg-gray-100 text-dark">{{ $reservation->car->name }} {{ $reservation->car->model }}</div></td>
-                                        <td><span class="d-lg-none d-sm-block">Imatriculation</span><span class="bold"></span>{{ $reservation->car->license_plate }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Nombre de jours</span>{{ $reservation->total_days}} Jours</td>
-                                        <td><span class="d-lg-none d-sm-block">Prix payé</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
-                                        <td><span class="d-lg-none d-sm-block">Date et heure de début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Date et heure de fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
+                                        <td><span class="d-lg-none d-sm-block">Véhicule</span><div class="hb1 bg-gray-100 text-dark">{{ $reservation->car->name }} {{ $reservation->car->model }}</div></td>
+                                        <td><span class="d-lg-none d-sm-block">N° Plaque</span><span class="bold"></span>{{ $reservation->car->license_plate }}</td>
+                                        <td><span class="d-lg-none d-sm-block">Jours</span>{{ $reservation->total_days}} Jours</td>
+                                        <td><span class="d-lg-none d-sm-block">Montant</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
+                                        <td><span class="d-lg-none d-sm-block">Début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
+                                        <td><span class="d-lg-none d-sm-block">Fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
                                         <td><div class="badge rounded-pill bg-{{ $detailedStatus['status'] }}">{{ $detailedStatus['label'] }}</div></td>
                                         </tr>
                                     </tbody>
