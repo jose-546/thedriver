@@ -429,47 +429,60 @@ class ReservationController extends Controller
 /**
  * Affiche la liste des réservations de l'utilisateur
  */
-public function index()
-{
-    $user = Auth::user();
-    
-    // Réservations actives (avec distinction entre en cours et programmées)
-    $activeReservations = $user->reservations()
-        ->with('car')
-        ->where('status', 'active')
-        ->where('payment_status', 'paid')
-        ->orderBy('reservation_end_date', 'asc')
-        ->orderBy('reservation_end_time', 'asc')
-        ->get()
-        ->map(function($reservation) {
-            // Ajouter des propriétés pour simplifier la vue
-            $reservation->isActive = $reservation->isActive();
-            $reservation->isScheduled = $reservation->isScheduled();
-            return $reservation;
-        });
-    
-    // Réservations en attente de paiement
-    $pendingReservations = $user->reservations()
-        ->with('car')
-        ->where('status', 'pending')
-        ->where('payment_status', 'pending')
-        ->orderBy('created_at', 'desc')
-        ->get();
-    
-    // Réservations passées/terminées avec pagination
-    $pastReservations = $user->reservations()
-        ->with('car')
-        ->whereIn('status', ['expired', 'completed'])
-        ->orderBy('reservation_end_date', 'desc')
-        ->orderBy('reservation_end_time', 'desc')
-        ->get(); // Retirer paginate(10) pour simplifier la vue
-    
-    return view('reservations.index', compact(
-        'activeReservations', 
-        'pendingReservations', 
-        'pastReservations'
-    ));
-}
+    public function index()
+    {
+        $user = Auth::user();
+        
+        // Réservations actives (payées ET actuellement en cours)
+        $activeReservations = $user->reservations()
+            ->with('car')
+            ->where('status', 'active')
+            ->where('payment_status', 'paid')
+            ->whereRaw("CONCAT(reservation_start_date, ' ', reservation_start_time) <= ?", [now()])
+            ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) > ?", [now()])
+            ->orderBy('reservation_end_date', 'asc')
+            ->orderBy('reservation_end_time', 'asc')
+            ->get();
+        
+        // Réservations programmées (payées mais pas encore commencées)
+        $scheduledReservations = $user->reservations()
+            ->with('car')
+            ->where('status', 'active')
+            ->where('payment_status', 'paid')
+            ->whereRaw("CONCAT(reservation_start_date, ' ', reservation_start_time) > ?", [now()])
+            ->orderBy('reservation_start_date', 'asc')
+            ->orderBy('reservation_start_time', 'asc')
+            ->get();
+        
+        // Réservations expirées
+        $expiredReservations = $user->reservations()
+            ->with('car')
+            ->where(function($query) {
+                $query->where('status', 'expired')
+                    ->orWhere(function($q) {
+                        $q->where('status', 'active')
+                            ->where('payment_status', 'paid')
+                            ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) <= ?", [now()]);
+                    });
+            })
+            ->orderBy('reservation_end_date', 'desc')
+            ->orderBy('reservation_end_time', 'desc')
+            ->paginate(10);
+
+        // Réservations annulées
+        $cancelledReservations = $user->reservations()
+            ->with('car')
+            ->where('status', 'cancelled')
+            ->orderBy('cancelled_at', 'desc')
+            ->paginate(10);
+        
+        return view('reservations.index', compact(
+            'activeReservations', 
+            'scheduledReservations',
+            'expiredReservations',
+            'cancelledReservations'
+        ));
+    }
 
     /**
      * Affiche les détails d'une réservation

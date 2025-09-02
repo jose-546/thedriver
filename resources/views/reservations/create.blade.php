@@ -225,8 +225,8 @@
 
         
 
-/* code pour personnaliser calandrier */
-:root {
+        /* code pour personnaliser calandrier */
+        :root {
             --primary-color: #860000;
             --text-color: #000000;
             --bg-color: #ffffff;
@@ -438,95 +438,95 @@
             }
         }
 
-/* code pour personnaliser calandrier */
+        /* code pour personnaliser calandrier */
 
 
 
-/* === Nouveau style pour le sélecteur d'heure === */
-.custom-time-selector {
-    position: relative;
-    width: 100%;
-}
+        /* === Nouveau style pour le sélecteur d'heure === */
+        .custom-time-selector {
+            position: relative;
+            width: 100%;
+        }
 
-.custom-time-selector .time-input {
-    cursor: pointer;
-    background-color: white;
-}
+        .custom-time-selector .time-input {
+            cursor: pointer;
+            background-color: white;
+        }
 
-.time-selector-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    margin-top: 5px;
-    display: none;
-    max-height: 200px;
-    overflow-y: auto;
-}
+        .time-selector-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            margin-top: 5px;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
 
-.time-selector-dropdown.active {
-    display: block;
-}
+        .time-selector-dropdown.active {
+            display: block;
+        }
 
-.time-option {
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid #f0f0f0;
-}
+        .time-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
 
-.time-option:last-child {
-    border-bottom: none;
-}
+        .time-option:last-child {
+            border-bottom: none;
+        }
 
-.time-option:hover {
-    background-color: #860000;
-    color: white;
-}
+        .time-option:hover {
+            background-color: #860000;
+            color: white;
+        }
 
-.time-option.selected {
-    background-color: #860000;
-    color: white;
-    font-weight: bold;
-}
+        .time-option.selected {
+            background-color: #860000;
+            color: white;
+            font-weight: bold;
+        }
 
-.time-selector-header {
-    padding: 10px 15px;
-    background-color: #860000;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px 8px 0 0;
-    text-align: center;
-}
+        .time-selector-header {
+            padding: 10px 15px;
+            background-color: #860000;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
 
-.time-selector-actions {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #f0f0f0;
-}
+        .time-selector-actions {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #f0f0f0;
+        }
 
-.time-selector-btn {
-    padding: 5px 10px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
+        .time-selector-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
 
-.time-selector-btn.confirm {
-    background-color: #860000;
-    color: white;
-}
+        .time-selector-btn.confirm {
+            background-color: #860000;
+            color: white;
+        }
 
-.time-selector-btn.cancel {
-    background-color: #f8f9fa;
-    color: #333;
-}
+        .time-selector-btn.cancel {
+            background-color: #f8f9fa;
+            color: #333;
+        }
 
         
         .error-message {
@@ -615,37 +615,37 @@
         }
 
         .popover-recap-box {
-    font-family: 'Outfit', serif; /* Correction ici : 'Outfit serif' → 'Outfit', serif */
-    background-color: #ffb400;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px;
-    border-radius: 10px;
-    
-    margin-top: 10px;
-}
+        font-family: 'Outfit', serif; /* Correction ici : 'Outfit serif' → 'Outfit', serif */
+        background-color: #ffb400;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        
+            margin-top: 10px;
+        }
 
-.popover-recap-box .d-row{
-    border-bottom: solid 1px #ffffff;
-    padding: 2px 0;
-}
+        .popover-recap-box .d-row{
+            border-bottom: solid 1px #ffffff;
+            padding: 2px 0;
+        }
 
 
-.popover-recap-box .amount {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #860000 ;
-}
+        .popover-recap-box .amount {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #860000 ;
+        }
 
-.popover-recap-box .label {
-    font-size: 0.9em;
-}
+        .popover-recap-box .label {
+            font-size: 0.9em;
+        }
 
-.popover-recap-box .tva {
-    font-size: 0.8em;
-}
+        .popover-recap-box .tva {
+            font-size: 0.8em;
+        }
 
-.discount-badge {
+        .discount-badge {
             background: #860000;
             color: white;
             padding: 2px 8px;
