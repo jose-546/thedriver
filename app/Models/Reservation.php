@@ -48,6 +48,8 @@ class Reservation extends Model
     protected $casts = [
         'reservation_start_date' => 'date',
         'reservation_end_date' => 'date',
+        'reservation_start_time' => 'datetime:H:i:s',
+        'reservation_end_time' => 'datetime:H:i:s',
         'total_days' => 'integer',
         'daily_rate' => 'decimal:2',
         'subtotal' => 'decimal:2',
@@ -859,5 +861,63 @@ class Reservation extends Model
     }
 }
 
+
+// Ajoutez ces méthodes dans votre modèle Reservation.php
+
+/**
+ * Obtient le temps restant formaté (alias de getTimeRemaining pour compatibilité)
+ */
+public function getRemainingTimeFormatted(): string
+{
+    return $this->getTimeRemaining();
+}
+
+/**
+ * Obtient les heures restantes sous forme décimale
+ */
+public function getRemainingHours(): float
+{
+    $now = now();
+    $endDateTime = $this->getRealEndDateTime();
+    
+    if ($endDateTime <= $now) {
+        return 0;
+    }
+    
+    return $now->diffInHours($endDateTime, true); // true pour les décimales
+}
+
+/**
+ * Version alternative plus détaillée de getRemainingTimeFormatted
+ */
+public function getRemainingTimeFormattedDetailed(): string
+{
+    $now = now();
+    $endDateTime = $this->getRealEndDateTime();
+    
+    if ($endDateTime <= $now) {
+        return 'Expiré';
+    }
+    
+    $startDateTime = $this->getStartDateTime();
+    
+    // Si la réservation n'a pas encore commencé
+    if ($startDateTime > $now) {
+        $diff = $startDateTime->diff($now);
+        return sprintf('Commence dans %dj %02dh %02dm', $diff->days, $diff->h, $diff->i);
+    }
+    
+    // Réservation en cours
+    $diff = $endDateTime->diff($now);
+    $totalHours = $diff->h + ($diff->days * 24);
+    
+    if ($diff->days > 0) {
+        return sprintf('%dj %02dh %02dm', $diff->days, $diff->h, $diff->i);
+    } elseif ($totalHours > 0) {
+        return sprintf('%02dh %02dm', $totalHours, $diff->i);
+    } else {
+        return sprintf('%02dm %02ds', $diff->i, $diff->s);
+    }
+}
 
 }

@@ -740,18 +740,48 @@
                                     </div>
                                     <div class="profile_name">
                                         <h4>
-                                            Monica Lucas                                                
-                                            <span class="profile_username text-gray">monica@rentaly.com</span>
+                                            {{ auth()->user()->username }}                                                  
+                                            <span class="profile_username text-gray">{{ auth()->user()->email }}</span>
                                         </h4>
                                     </div>
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a href="" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
-                                    <li><a href="{{ asset('account-profile.html') }}"><i class="fa fa-user"></i>My Profile</a></li>
-                                    <li><a href="{{ asset('account-booking.html') }}"><i class="fa fa-calendar"></i>My Orders</a></li>
-                                    <li><a href="{{ asset('account-favorite.html') }}"><i class="fa fa-car"></i>My Favorite Cars</a></li>
-                                    <li><a href="{{ asset('login.html') }}"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                                    <li>
+                                        <a href="{{ route('dashboard') }}" 
+                                        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                                        <i class="fa fa-home"></i> Tableau de bord
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('profile.edit') }}" 
+                                        class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                                        <i class="fa fa-user"></i> Mon Profil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('reservations.index') }}" 
+                                        class="{{ request()->routeIs('reservations.index') ? 'active' : '' }}">
+                                        <i class="fa fa-calendar"></i> Mes Réservations
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('cars.search') }}" 
+                                        class="{{ request()->routeIs('cars.search') ? 'active' : '' }}">
+                                        <i class="fa fa-car"></i> Voitures Disponibles
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fa fa-sign-out"></i> Déconnexion
+                                            </button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -914,9 +944,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="tw-text-right">
-                                                        <div class="tw-font-semibold tw-text-gray-900">{{ number_format($extension->price, 0, ',', ' ') }} FCFA</div>
-                                                        <div class="tw-text-xs {{ $extension->status === 'paid' ? 'tw-text-green-600' : 'tw-text-yellow-600' }}">
-                                                            {{ $extension->status === 'paid' ? 'Payé' : 'En attente' }}
+                                                        <div class="tw-font-semibold tw-text-gray-900">{{ number_format($extension->final_total, 0, ',', ' ') }} FCFA</div>
+                                                        <div class="tw-text-xs {{ $extension->payment_status === 'paid' ? 'tw-text-green-600' : 'tw-text-yellow-600' }}">
+                                                            {{ $extension->payment_status === 'paid' ? 'Payé' : 'En attente' }}
                                                         </div>
                                                     </div>
                                                 </div>

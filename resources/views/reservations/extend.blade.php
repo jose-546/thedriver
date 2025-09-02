@@ -438,14 +438,30 @@
                 <div class="dates-grid">
                     <div class="date-card date-card-start">
                         <div class="date-label">Début</div>
-                        <div class="date-value">{{ $reservation->reservation_start_date->format('d/m/Y') }}</div>
-                        <div class="date-time">{{ $reservation->reservation_start_time->format('H:i') }}</div>
+                        <div class="date-value">
+                            {{ is_string($reservation->reservation_start_date) ? 
+                                \Carbon\Carbon::parse($reservation->reservation_start_date)->format('d/m/Y') : 
+                                $reservation->reservation_start_date->format('d/m/Y') }}
+                        </div>
+                        <div class="date-time">
+                            {{ is_string($reservation->reservation_start_time) ? 
+                                \Carbon\Carbon::parse($reservation->reservation_start_time)->format('H:i') : 
+                                $reservation->reservation_start_time->format('H:i') }}
+                        </div>
                     </div>
                     
                     <div class="date-card date-card-current">
                         <div class="date-label">Fin actuelle</div>
-                        <div class="date-value">{{ $reservation->reservation_end_date->format('d/m/Y') }}</div>
-                        <div class="date-time">{{ $reservation->reservation_end_time->format('H:i') }}</div>
+                        <div class="date-value">
+                            {{ is_string($reservation->reservation_end_date) ? 
+                                \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d/m/Y') : 
+                                $reservation->reservation_end_date->format('d/m/Y') }}
+                        </div>
+                        <div class="date-time">
+                            {{ is_string($reservation->reservation_end_time) ? 
+                                \Carbon\Carbon::parse($reservation->reservation_end_time)->format('H:i') : 
+                                $reservation->reservation_end_time->format('H:i') }}
+                        </div>
                     </div>
                     
                     <div class="date-card date-card-remaining">
@@ -483,6 +499,9 @@
                 <form method="POST" action="{{ route('reservations.extend', $reservation) }}" id="extensionForm">
                     @csrf
                     
+                    <!-- CHAMP CACHÉ POUR extension_days - CORRECTION PRINCIPALE -->
+                    <input type="hidden" id="extension_days" name="extension_days" value="">
+                    
                     <!-- Sélection de nouvelle date de fin -->
                     <div class="info-section">
                         <h2 class="section-title">Nouvelle date de fin</h2>
@@ -491,11 +510,14 @@
                             <div class="form-group">
                                 <label for="new_end_date" class="form-label">Nouvelle date de fin *</label>
                                 <input type="date" 
-                                       id="new_end_date" 
-                                       name="new_end_date" 
-                                       min="{{ $reservation->reservation_end_date->addDay()->format('Y-m-d') }}"
-                                       required
-                                       class="form-input">
+                                id="new_end_date" 
+                                name="new_end_date" 
+                                min="{{ is_string($reservation->reservation_end_date) ? 
+                                        \Carbon\Carbon::parse($reservation->reservation_end_date)->addDay()->format('Y-m-d') : 
+                                        $reservation->reservation_end_date->addDay()->format('Y-m-d') }}"
+                                required
+                                class="form-input">
+
                             </div>
                             
                             <div class="form-group">
@@ -508,9 +530,11 @@
                             </div>
                         </div>
                         
-                        <p class="text-sm text-gray-600">
-                            La nouvelle date de fin doit être au minimum le {{ $reservation->reservation_end_date->addDay()->format('d/m/Y') }}.
-                        </p>
+                       <p class="text-sm text-gray-600">
+                        La nouvelle date de fin doit être au minimum le {{ is_string($reservation->reservation_end_date) ? 
+                            \Carbon\Carbon::parse($reservation->reservation_end_date)->addDay()->format('d/m/Y') : 
+                            $reservation->reservation_end_date->addDay()->format('d/m/Y') }}.
+                       </p>
                     </div>
 
                     <!-- Résumé de l'extension -->
@@ -520,7 +544,14 @@
                         <div class="summary-grid">
                             <div class="summary-item">
                                 <div class="summary-label">Fin actuelle</div>
-                                <div class="summary-value">{{ $reservation->reservation_end_date->format('d/m/Y H:i') }}</div>
+                                <div class="summary-value">
+                                    {{ is_string($reservation->reservation_end_date) ? 
+                                        \Carbon\Carbon::parse($reservation->reservation_end_date)->format('d/m/Y H:i') : 
+                                        $reservation->reservation_end_date->format('d/m/Y') }} 
+                                    {{ is_string($reservation->reservation_end_time) ? 
+                                        \Carbon\Carbon::parse($reservation->reservation_end_time)->format('H:i') : 
+                                        $reservation->reservation_end_time->format('H:i') }}
+                                </div>
                             </div>
                             <div class="summary-item">
                                 <div class="summary-label">Nouvelle fin</div>
@@ -568,6 +599,29 @@
                                        value="{{ old('client_phone', $reservation->client_phone) }}"
                                        required
                                        class="form-input">
+                            </div>
+
+                                <!-- NOUVEAU CHAMP À AJOUTER -->
+                            <div class="form-group">
+                                <label for="client_location" class="form-label">Lieu de prise en charge *</label>
+                                <input type="text" 
+                                    id="client_location" 
+                                    name="client_location" 
+                                    value="{{ old('client_location', $reservation->client_location) }}"
+                                    required
+                                    class="form-input"
+                                    placeholder="Adresse ou lieu de récupération">
+                            </div>
+
+                             <div class="form-group">
+                                <label for="deployment_zone" class="form-label">Lieu de prise en charge *</label>
+                                <input type="text" 
+                                    id="deployment_zone" 
+                                    name="deployment_zone" 
+                                    value="{{ old('deployment_zone', $reservation->deployment_zone) }}"
+                                    required
+                                    class="form-input"
+                                    placeholder="Adresse ou lieu de récupération">
                             </div>
                         </div>
                     </div>
@@ -623,6 +677,7 @@
             // Éléments du DOM
             const newEndDateInput = document.getElementById('new_end_date');
             const newEndTimeInput = document.getElementById('new_end_time');
+            const extensionDaysInput = document.getElementById('extension_days'); // NOUVEAU
             const extensionSummary = document.getElementById('extensionSummary');
             const newEndDate = document.getElementById('newEndDate');
             const additionalDays = document.getElementById('additionalDays');
@@ -646,6 +701,7 @@
                 
                 if (!selectedEndDate) {
                     extensionSummary.classList.remove('visible');
+                    extensionDaysInput.value = ''; // NOUVEAU - vider le champ caché
                     return;
                 }
                 
@@ -655,8 +711,12 @@
                 
                 if (diffDays <= 0) {
                     extensionSummary.classList.remove('visible');
+                    extensionDaysInput.value = ''; // NOUVEAU - vider le champ caché
                     return;
                 }
+                
+                // NOUVEAU - mettre à jour le champ caché extension_days
+                extensionDaysInput.value = diffDays;
                 
                 // Calcul du prix
                 const subtotal = diffDays * dailyRate;
@@ -704,6 +764,13 @@
                 
                 extensionSummary.classList.add('visible');
                 checkFormValidity();
+                
+                // DEBUG - Log des données calculées
+                console.log('Extension calculée:', {
+                    diffDays: diffDays,
+                    extensionDaysInputValue: extensionDaysInput.value,
+                    finalPrice: finalPrice
+                });
             }
             
             // Événements pour les champs de date/heure
@@ -719,14 +786,19 @@
             function checkFormValidity() {
                 const clientEmail = document.getElementById('client_email').value.trim();
                 const clientPhone = document.getElementById('client_phone').value.trim();
+                const clientLocation = document.getElementById('client_location').value.trim(); // NOUVEAU
+                const clientDeployement = document.getElementById('deployment_zone').value.trim(); // NOUVEAU
                 
-                const isValid = calculationData && conditionsAccepted && clientEmail && clientPhone && !isSubmitting;
+                const isValid = calculationData && conditionsAccepted && clientEmail && clientPhone && clientLocation && clientDeployement && !isSubmitting; // Modifié
                 submitButton.disabled = !isValid;
             }
             
             // Vérifier la validité lors de la saisie des champs
             document.getElementById('client_email').addEventListener('input', checkFormValidity);
             document.getElementById('client_phone').addEventListener('input', checkFormValidity);
+            document.getElementById('client_location').addEventListener('input', checkFormValidity);
+            document.getElementById('deployment_zone').addEventListener('input', checkFormValidity);
+
             
             // Compte à rebours en temps réel
             function updateCountdown() {
@@ -755,7 +827,7 @@
             updateCountdown();
             setInterval(updateCountdown, 60000);
             
-            // Gestion de la soumission du formulaire
+            // Gestion de la soumission du formulaire - CORRIGÉE
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -763,22 +835,40 @@
                     return;
                 }
                 
-                if (validateForm()) {
-                    initializePayment();
+                // Validation finale avant soumission
+                if (!validateForm()) {
+                    return;
                 }
+                
+                // DEBUG - Vérifier les données avant soumission
+                console.log('=== SOUMISSION FORMULAIRE ===');
+                console.log('extension_days:', extensionDaysInput.value);
+                console.log('client_email:', document.getElementById('client_email').value);
+                console.log('client_phone:', document.getElementById('client_phone').value);
+                console.log('terms_accepted:', termsCheckbox.checked);
+                
+                // Soumettre le formulaire normalement (pas AJAX)
+                form.submit();
             });
             
             function validateForm() {
                 const clientEmail = document.getElementById('client_email').value.trim();
                 const clientPhone = document.getElementById('client_phone').value.trim();
+                const extensionDays = extensionDaysInput.value;
+                
+                console.log('=== VALIDATION FORMULAIRE ===');
+                console.log('Email:', clientEmail);
+                console.log('Phone:', clientPhone);
+                console.log('Extension days:', extensionDays);
+                console.log('Terms accepted:', conditionsAccepted);
                 
                 if (!clientEmail || !clientPhone) {
                     alert('Veuillez remplir tous les champs obligatoires (email et téléphone)');
                     return false;
                 }
                 
-                if (!calculationData) {
-                    alert('Veuillez sélectionner une nouvelle date de fin.');
+                if (!extensionDays || extensionDays <= 0) {
+                    alert('Veuillez sélectionner une nouvelle date de fin valide.');
                     return false;
                 }
                 
@@ -788,76 +878,6 @@
                 }
                 
                 return true;
-            }
-            
-            function initializePayment() {
-                isSubmitting = true;
-                
-                // Désactiver le bouton et changer le texte
-                const originalText = submitButton.innerHTML;
-                submitButton.disabled = true;
-                submitButton.innerHTML = `
-                    <svg class="btn-icon animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                    </svg>
-                    Traitement en cours...
-                `;
-                
-                // Préparer les données du formulaire
-                const formData = new FormData(form);
-                
-                console.log('Envoi de la requête d\'extension...');
-                
-                // Faire une requête AJAX pour créer la prolongation
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    console.log('Réponse reçue:', response.status);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Données reçues:', data);
-                    
-                    if (data.success && data.checkout_url) {
-                        console.log('Redirection vers FedaPay:', data.checkout_url);
-                        // Rediriger vers FedaPay
-                        window.location.href = data.checkout_url;
-                    } else {
-                        throw new Error(data.message || 'Réponse invalide du serveur');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la création de l\'extension:', error);
-                    
-                    // Afficher l'erreur à l'utilisateur
-                    let errorMessage = 'Une erreur est survenue lors de la préparation du paiement.';
-                    if (error.message) {
-                        errorMessage += '\n\nDétails: ' + error.message;
-                    }
-                    
-                    alert(errorMessage);
-                    
-                    // Restaurer le bouton
-                    resetSubmitButton(originalText);
-                });
-            }
-            
-            function resetSubmitButton(originalText) {
-                isSubmitting = false;
-                submitButton.innerHTML = originalText;
-                checkFormValidity(); // Réactiver le bouton si le formulaire est valide
             }
             
             // Vérification initiale de la validité du formulaire

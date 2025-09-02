@@ -200,7 +200,7 @@
                                 </div>
                                 <div class="mt-1">
                                     <span class="d-title">Statut</span>
-                                    <spam class="d-value"><a class="bouton-disponible" href="{{ asset('#') }}">{{ $car->getStatusLabel()}}</a></spam>
+                                    <spam class="d-value"><a class="bbadge" href="{{ asset('#') }}">{{ $car->getStatusLabel()}}</a></spam>
                                 </div>
                                 
                             </div>
@@ -250,14 +250,23 @@
                                     </div>
 
                                 <!-- Bouton de réservation -->
-                                @if($car->isAvailable())
+                               <!--  @if($car->isAvailable())
                                     <input type='button' id='send_message' value='Réserver maintenant'
                                     onclick="window.location.href='{{ route('reservations.create', $car) }}'"
                                     class="btn-main btn-fullwidth">
                                 @else
                                     <input type='button' id='send_message' value='Non disponible' class="btn-main btn-fullwidth" disabled>
-                                @endif
+                                @endif -->
 
+                                @if($car->isAvailable())
+    <a href="{{ route('reservations.create', $car) }}" class="btn-main btn-fullwidth">
+        Réserver maintenant
+    </a>
+@else
+    <a href="#" class="btn-main btn-fullwidth disabled" aria-disabled="true">
+        Non disponible
+    </a>
+@endif
                                     <div class="clearfix"></div>
                                     
                                 </form>

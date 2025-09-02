@@ -279,7 +279,7 @@
     .status-badge {
         display: inline-flex;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: 0.2rem 1rem;
         border-radius: 9999px;
         font-size: 0.75rem;
         font-weight: 600;
@@ -288,7 +288,7 @@
     }
 
     .status-active {
-        background-color: #28a745;
+        background-color: #198754;
         color: white;
     }
 
@@ -442,7 +442,7 @@
     }
 
     .countdown-timer.text-green {
-        color: #28a745;
+        color: #198754;
     }
 
     /* Actions des réservations */
@@ -635,42 +635,51 @@
                                     </div>
                                     <div class="profile_name">
                                         <h4>
-                                            Monica Lucas                                                
-                                            <span class="profile_username text-gray">monica@rentaly.com</span>
+                                            {{ auth()->user()->username }}                                                  
+                                            <span class="profile_username text-gray">{{ auth()->user()->email }}</span>
                                         </h4>
                                     </div>
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-    <li>
-        <a href="{{ route('dashboard') }}" class="active">
-            <i class="fa fa-home"></i> Dashboard
-        </a>
-    </li>
-    <li>
-        <a href="{{ asset('account-profile.html') }}">
-            <i class="fa fa-user"></i> My Profile
-        </a>
-    </li>
-    <li>
-        <a href="{{ asset('account-booking.html') }}">
-            <i class="fa fa-calendar"></i> My Orders
-        </a>
-    </li>
-    <li>
-        <a href="{{ asset('account-favorite.html') }}">
-            <i class="fa fa-car"></i> My Favorite Cars
-        </a>
-    </li>
-    <li>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="dropdown-item">
-                <i class="fa fa-sign-out"></i> Déconnexion
-            </button>
-        </form>
-    </li>
-</ul>
+                                    <li>
+                                        <a href="{{ route('dashboard') }}" 
+                                        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                                        <i class="fa fa-home"></i> Tableau de bord
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('profile.edit') }}" 
+                                        class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                                        <i class="fa fa-user"></i> Mon Profil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('reservations.index') }}" 
+                                        class="{{ request()->routeIs('reservations.index') ? 'active' : '' }}">
+                                        <i class="fa fa-calendar"></i> Mes Réservations
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('cars.search') }}" 
+                                        class="{{ request()->routeIs('cars.search') ? 'active' : '' }}">
+                                        <i class="fa fa-car"></i> Voitures Disponibles
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('logout') }}" 
+                                        onclick="event.preventDefault(); this.nextElementSibling.submit();">
+                                            <i class="fa fa-sign-out"></i> Déconnexion
+                                        </a>
+                                        <form method="POST" action="{{ route('logout') }}" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </li>
+
+                                </ul>
 
                             </div>
 
@@ -695,7 +704,7 @@
                                         @endphp
                                                 {{ $activeCount }}
                                         </span>
-                                        <span class="text-gray">Réservations actives</span>
+                                        <span class="text-gray">Actives</span>
                                     </div>
                                 </div>
 
@@ -704,8 +713,8 @@
                                         <div class="symbol mb40">
                                             <i class="fa id-color fa-2x fa-tags"></i>
                                         </div>
-                                        <span class="hee1 mb0">12</span>
-                                        <span class="text-gray">Coupons</span>
+                                        <span class="hee1 mb0">0</span>
+                                        <span class="text-gray">Annulées</span>
                                     </div>
                                 </div>
 
@@ -852,7 +861,7 @@
                                                             Détails
                                                         </a>
                                                         
-                                                        {{-- Bouton PROLONGER - Toujours visible pour les réservations actives --}}
+                                                        {{-- Bouton PROLONGER - Toujours visible pour les réservations actives 
                                                         @if($reservation->status === 'active')
                                                             @php
                                                                 $remainingSeconds = $endDateTime->diffInSeconds($now);
@@ -863,20 +872,21 @@
                                                             @endphp
                                                             
                                                             @if($canExtend)
-                                                                {{-- Bouton ACTIF si >= 1h --}}
+                                                                {{-- Bouton ACTIF si >= 1h 
                                                                 <a href="{{ route('reservations.form', $reservation) }}" 
                                                                 class="btn-sm bg-orange-500"
                                                                 title="Temps restant: {{ $remainingHoursForButton }}h {{ $remainingMinutesForButton }}m {{ $remainingSecondsDisplay }}s">
                                                                     <i class="fas fa-clock"></i> Prolonger
                                                                 </a>
                                                             @else
-                                                                {{-- Bouton INACTIF (grisé) si < 1h --}}
+                                                                {{-- Bouton INACTIF (grisé) si < 1h 
                                                                 <span class="btn-sm bg-gray-200"
                                                                     title="Prolongation bloquée : il reste {{ $remainingMinutesForButton }}m {{ $remainingSecondsDisplay }}s (minimum requis : 1h)">
                                                                     <i class="fas fa-clock"></i> Prolonger
                                                                 </span>
                                                             @endif
                                                         @endif
+                                                        --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -895,68 +905,72 @@
                                     ->get();
                             @endphp
 
-                            @if($recentReservations->count() > 0)
-                                    <h4>Mes réservations récentes</h4>
-                                    @foreach($recentReservations as $reservation)
-                                        @php
-                                            // Calculer le statut basé uniquement sur les dates
-                                            $now = now();
-                                            $startDateTime = $reservation->getStartDateTime();
-                                            $endDateTime = $reservation->getEndDateTime();
-                                            $detailedStatus = [];
-                                            
-                                            if ($endDateTime <= $now) {
-                                                // Réservation expirée
-                                                $detailedStatus = [
-                                                    'status' => 'expired',
-                                                    'label' => 'Expiré',
-                                                    'color' => 'red'
-                                                ];
-                                            }
-                                            elseif ($startDateTime > $now) {
-                                                // Réservation programmée (pas encore commencée)
-                                                $detailedStatus = [
-                                                    'status' => 'scheduled',
-                                                    'label' => 'Programmé',
-                                                    'color' => 'blue'
-                                                ];
-                                            }
-                                            else {
-                                                // Réservation en cours
-                                                $detailedStatus = [
-                                                    'status' => 'active',
-                                                    'label' => 'En cours',
-                                                    'color' => 'green'
-                                                ];
-                                            }
-                                        @endphp
-                                    <table class="table de-table">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Véhicule</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">N° Plaque</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Jours</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Début</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Fin</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                        <td><span class="d-lg-none d-sm-block">Véhicule</span><div class="hb1 bg-gray-100 text-dark">{{ $reservation->car->name }} {{ $reservation->car->model }}</div></td>
-                                        <td><span class="d-lg-none d-sm-block">N° Plaque</span><span class="bold"></span>{{ $reservation->car->license_plate }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Jours</span>{{ $reservation->total_days}} Jours</td>
-                                        <td><span class="d-lg-none d-sm-block">Montant</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
-                                        <td><span class="d-lg-none d-sm-block">Début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><div class="badge rounded-pill bg-{{ $detailedStatus['status'] }}">{{ $detailedStatus['label'] }}</div></td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                    @endforeach
-                                </div>
-                            @endif
+                                            @if($recentReservations->count() > 0)
+                                            <h4>Mes réservations récentes</h4>
+                                            <table class="table de-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Véhicule</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">N° Plaque</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Jours</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Début</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Fin</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($recentReservations as $reservation)
+                                                        @php
+                                                            $now = now();
+                                                            $startDateTime = $reservation->getStartDateTime();
+                                                            $endDateTime = $reservation->getEndDateTime();
+                                                            
+                                                            if ($endDateTime <= $now) {
+                                                                $detailedStatus = [
+                                                                    'status' => 'expired',
+                                                                    'label' => 'Expiré',
+                                                                    'color' => 'danger' // Bootstrap utilise bg-danger
+                                                                ];
+                                                            }
+                                                            elseif ($startDateTime > $now) {
+                                                                $detailedStatus = [
+                                                                    'status' => 'scheduled',
+                                                                    'label' => 'Programmé',
+                                                                    'color' => 'primary' // bg-primary
+                                                                ];
+                                                            }
+                                                            else {
+                                                                $detailedStatus = [
+                                                                    'status' => 'active',
+                                                                    'label' => 'En cours',
+                                                                    'color' => 'success' // bg-success
+                                                                ];
+                                                            }
+                                                        @endphp
+                                                        <tr>
+                                                            <td>
+                                                                <span class="d-lg-none d-sm-block">Véhicule</span>
+                                                                <div class="hb1 bg-gray-100 text-dark">
+                                                                    {{ $reservation->car->name }} {{ $reservation->car->model }}
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="d-lg-none d-sm-block">N° Plaque</span>{{ $reservation->car->license_plate }}</td>
+                                                            <td><span class="d-lg-none d-sm-block">Jours</span>{{ $reservation->total_days }} Jours</td>
+                                                            <td><span class="d-lg-none d-sm-block">Montant</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
+                                                            <td><span class="d-lg-none d-sm-block">Début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
+                                                            <td><span class="d-lg-none d-sm-block">Fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
+                                                            <td>
+                                                                <div class="badge rounded-pill bg-{{ $detailedStatus['color'] }}">
+                                                                    {{ $detailedStatus['label'] }}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
+
 
                             @if($recentReservations->count() == 0)
                                 <div class="section-card">

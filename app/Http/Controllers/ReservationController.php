@@ -37,12 +37,9 @@ class ReservationController extends Controller
         }
     }
 
-
-
-
-       /**
+    /**
      * Enregistre une nouvelle réservation et initie le paiement
-     */
+    */
     public function store(Request $request)
     {
         Log::info('=== NOUVELLE RÉSERVATION ===', [
@@ -139,9 +136,9 @@ class ReservationController extends Controller
     }
 
 
-     /**
+    /**
      * ✅ CALCUL SERVEUR AUTORITAIRE DES PRIX AVEC RÉDUCTIONS
-     */
+    */
     private function calculateReservationPrice(Car $car, Carbon $startDateTime, Carbon $endDateTime, bool $withDriver): array
     {
         // ⭐ CORRECTION MAJEURE : Calcul du nombre de jours inclusif
@@ -201,9 +198,9 @@ class ReservationController extends Controller
         ];
     }
 
-      /**
+    /**
      * Vérification de disponibilité
-     */
+    */
     private function isCarAvailable(Car $car, Carbon $startDateTime, Carbon $endDateTime): bool
     {
         return !$car->reservations()
@@ -215,9 +212,9 @@ class ReservationController extends Controller
             ->exists();
     }
 
-     /**
+    /**
      * Création de la réservation avec tous les calculs
-     */
+    */
     private function createReservation(array $validatedData, Car $car, Carbon $startDateTime, Carbon $endDateTime, array $priceCalculation): Reservation
     {
         $reservation = new Reservation();
@@ -254,8 +251,8 @@ class ReservationController extends Controller
         return $reservation;
     }
 
-       /**  * ✅ CRÉATION TRANSACTION FEDAPAY AVEC MONTANT CORRECT
-     */
+    /**  * ✅ CRÉATION TRANSACTION FEDAPAY AVEC MONTANT CORRECT
+    */
     private function createFedaPayTransaction(Reservation $reservation, Request $request, Car $car)
     {
         $secretKey = config('services.fedapay.secret_key');
@@ -367,9 +364,9 @@ class ReservationController extends Controller
         }
     }
 
-      /**
+    /**
      * Gestion des erreurs
-     */
+    */
     private function handleError(Request $request, string $message)
     {
         if ($request->ajax()) {
@@ -428,40 +425,59 @@ class ReservationController extends Controller
 
     /**
      * Affiche la liste des réservations de l'utilisateur
-     */
+    */
     public function index()
     {
         $user = Auth::user();
         
-        // Réservations actives
+        // Réservations actives (payées ET actuellement en cours)
         $activeReservations = $user->reservations()
             ->with('car')
             ->where('status', 'active')
             ->where('payment_status', 'paid')
+            ->whereRaw("CONCAT(reservation_start_date, ' ', reservation_start_time) <= ?", [now()])
+            ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) > ?", [now()])
             ->orderBy('reservation_end_date', 'asc')
             ->orderBy('reservation_end_time', 'asc')
             ->get();
         
-        // Réservations en attente de paiement
-        $pendingReservations = $user->reservations()
+        // Réservations programmées (payées mais pas encore commencées)
+        $scheduledReservations = $user->reservations()
             ->with('car')
-            ->where('status', 'pending')
-            ->where('payment_status', 'pending')
-            ->orderBy('created_at', 'desc')
+            ->where('status', 'active')
+            ->where('payment_status', 'paid')
+            ->whereRaw("CONCAT(reservation_start_date, ' ', reservation_start_time) > ?", [now()])
+            ->orderBy('reservation_start_date', 'asc')
+            ->orderBy('reservation_start_time', 'asc')
             ->get();
         
-        // Réservations passées/terminées
-        $pastReservations = $user->reservations()
+        // Réservations expirées
+        $expiredReservations = $user->reservations()
             ->with('car')
-            ->whereIn('status', ['expired', 'completed'])
+            ->where(function($query) {
+                $query->where('status', 'expired')
+                    ->orWhere(function($q) {
+                        $q->where('status', 'active')
+                            ->where('payment_status', 'paid')
+                            ->whereRaw("CONCAT(reservation_end_date, ' ', reservation_end_time) <= ?", [now()]);
+                    });
+            })
             ->orderBy('reservation_end_date', 'desc')
             ->orderBy('reservation_end_time', 'desc')
+            ->paginate(10);
+
+        // Réservations annulées
+        $cancelledReservations = $user->reservations()
+            ->with('car')
+            ->where('status', 'cancelled')
+            ->orderBy('cancelled_at', 'desc')
             ->paginate(10);
         
         return view('reservations.index', compact(
             'activeReservations', 
-            'pendingReservations', 
-            'pastReservations'
+            'scheduledReservations',
+            'expiredReservations',
+            'cancelledReservations'
         ));
     }
 
@@ -493,7 +509,7 @@ class ReservationController extends Controller
                 ->with('error', 'Cette réservation ne peut plus être annulée.');
         }
 
-        // 🔥 CORRECTION : Remettre la voiture disponible lors de l'annulation
+        // CORRECTION : Remettre la voiture disponible lors de l'annulation
         if ($reservation->car) {
             $reservation->car->update(['status' => 'available']);
             Log::info('Voiture remise disponible après annulation', [
@@ -903,13 +919,14 @@ class ReservationController extends Controller
             'extension_days' => 'required|integer|min:1|max:30',
             'client_email' => 'required|email',
             'client_phone' => 'required|string|min:8',
+            'client_location' => 'required|string|max:255',  // AJOUT
+            'deployment_zone' => 'required|string|max:255',  // AJOUT
             'terms_accepted' => 'required|accepted'
         ]);
         
         // Calculer les nouvelles dates
         $currentEndDateTime = $reservation->getEndDateTime();
-        $newEndDateTime = $currentEndDateTime->copy()->addDays($request->extension_days);
-        
+        $newEndDateTime = $currentEndDateTime->copy()->addDays((int) $request->extension_days);        
         Log::info('Calcul extension:', [
             'current_end' => $currentEndDateTime->toDateTimeString(),
             'new_end' => $newEndDateTime->toDateTimeString(),
@@ -955,6 +972,8 @@ class ReservationController extends Controller
             'terms_accepted' => true,
             'client_email' => $request->client_email,
             'client_phone' => $request->client_phone,
+            'client_location' => $request->client_location, // AJOUT
+            'deployment_zone' => $reservation->deployment_zone ?? 'Default',
             'extension_of' => $reservation->id, // 🔗 Lien vers la réservation originale
         ]);
         

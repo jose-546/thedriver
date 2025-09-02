@@ -49,7 +49,7 @@
 }
 .bouton-detail:hover{
     
-    background: #ffb400;
+    background: #000000;
     color: #ffffff;
     
 }
@@ -58,13 +58,13 @@
     display: inline-block;
     font-family: var(--title-font);
     text-align: center;
-    background: #ffb400;
+    background: #000000;
     color: #ffffff;
     outline: 0;
-    font-weight: 800;
+    font-weight: 500;
     text-decoration: none;
     padding: 4px 30px 4px 30px;
-    font-size: 13px;
+    font-size: 14px;
     border: none;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -87,9 +87,10 @@
 .bouton-voitures {
         display: flex;
         justify-content: center;
-      padding: 15px 30px;
+      padding: 8px 0px;
       font-size: 18px;
-      font-weight: bold;
+      font-weight:  400;
+      font-family: 'Outfit', serif; 
       color: #fff;
       background-color: #860000;
       border: none;
@@ -102,9 +103,36 @@
     }
 
     .bouton-voitures:hover {
-      background-color: #a00000; /* Un rouge un peu plus clair au survol */
-      color: #fff;
-      }
+    color: #fff;
+    -webkit-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326); /* #860000 en rgba */
+    -moz-box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
+    box-shadow: 2px 2px 20px 0px rgba(134, 0, 0, 0.326);
+    }
+
+    .no-click {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bbadge{
+    background-color: #198754;
+    border-radius: 14px;
+    padding: 3px 10px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #ffffff;
+    pointer-events: none;
+    cursor: default;
+}
+.bbadge:hover{
+    background-color: #198754;
+    border-radius: 14px;
+    padding: 3px 10px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #ffffff;
+}
+
 
       .yy{
         display: flex;
@@ -305,3 +333,6 @@ font-size: 14px;
         
         gap: 0.5rem;
     }
+
+
+    

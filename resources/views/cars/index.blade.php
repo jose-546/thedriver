@@ -77,11 +77,17 @@
 											<img src="{{ $car->getImageUrl() }}" style="height: 200px; object-fit: cover;" class="img-fluid" alt="{{ $car->name }}">
 										</div>
 										<div class="d-info">
-											<div class="d-text">
-												<h4>{{ $car->getFullName() }}</h4>
+											<div class="d-text ">
+                                                <div class="no-click">
+
+                                                    <h4>{{ $car->getFullName() }}</h4>
+                                                    <div>
+
+                                                        <span class="badge rounded-pill bg-success">{{ $car->getStatusLabel() }}</span>
+                                                    </div>
+                                                </div>
 												
-                                                    <div class="d-item_like">
-                                                <a class="bouton-disponible" href="car-single.html">{{ $car->getStatusLabel() }}</a>
+                                                    <div class="d-item_lik">
                                               <!--   <i class="fa fa-heart"></i><span>74</span> -->
                                                 </div>
 												<div class="d-atr-group">
