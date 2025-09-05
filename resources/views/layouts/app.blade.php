@@ -1,28 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="zxx">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Mon Profil')</title>
+<title>@yield('title', 'Mon Profil')</title>
+    <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website Template" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet" type="text/css" id="mdb">
+    <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/custom-1.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/coloring.css') }}" rel="stylesheet" type="text/css">
+    <!-- color scheme -->
+    <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-    <!-- CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
- <link href="css/mdb.min.css" rel="stylesheet" type="text/css" id="mdb"> 
- <link href="css/plugins.css" rel="stylesheet" type="text/css"> 
- <link href="css/style.css" rel="stylesheet" type="text/css"> 
- <link href="css/custom-1.css" rel="stylesheet" type="text/css"> 
- <link href="css/coloring.css" rel="stylesheet" type="text/css"> <!-- color scheme --> 
-<link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css">
 </head>
-<body>
 
-       <div id="wrapper">
+<body>
+    <div id="wrapper">
+        
         <!-- page preloader begin -->
         <div id="de-preloader"></div>
         <!-- page preloader close -->
 
-  
-        <div id="content">
+        <!-- content begin -->
+        <div class="no-bottom no-top zebra" id="content">
+            <div id="top"></div>
             @yield('content')
         </div>
 

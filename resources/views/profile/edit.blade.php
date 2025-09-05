@@ -1,27 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Mon Profil')
-@include('partials.headerblanc')
 @section('content')
-<section id="subheader" class="jarallax text-light">
-    <img src="{{ asset('images/background/14.jpg') }}" class="jarallax-img" alt="">
-    <div class="center-y relative text-center">
-        <div class="container">
-            <h1>Mon Profil</h1>
-        </div>
-    </div>
-</section>
-
 <section id="section-settings" class="bg-gray-100">
     <div class="container">
         <div class="row">
 
             {{-- Sidebar --}}
-            <div class="col-lg-3 mb30">
+             <div class="col-lg-3 mb30">
                             <div class="card p-4 rounded-5">
                                 <div class="profile_avatar">
                                     <div class="profile_img">
-                                        <img src="images/profile/1.jpg" alt="">
+                                        <img src="{{ asset('images/profile/1.jpg') }}" alt="">
                                     </div>
                                     <div class="profile_name">
                                         <h4>
@@ -60,15 +49,20 @@
                                     </li>
 
                                     <li>
-                                        <form method="POST" action="{{ route('logout') }}">
+                                        <a href="{{ route('logout') }}" 
+                                        onclick="event.preventDefault(); this.nextElementSibling.submit();">
+                                            <i class="fa fa-sign-out"></i> Déconnexion
+                                        </a>
+                                        <form method="POST" action="{{ route('logout') }}" style="display: none;">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="fa fa-sign-out"></i> Déconnexion
-                                            </button>
                                         </form>
                                     </li>
+
                                 </ul>
+
                             </div>
+
+                            
                         </div>
 
             {{-- Main Content --}}

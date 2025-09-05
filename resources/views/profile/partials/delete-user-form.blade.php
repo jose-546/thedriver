@@ -1,6 +1,6 @@
 
-    <h2 class="h5 mb-3">Supprimer le compte</h2>
-    <p class="text-muted mb-3">
+    <h5>Supprimer le compte</h5>
+    <p>
         Une fois votre compte supprimé, toutes ses données seront définitivement supprimées.
         Avant de supprimer votre compte, veuillez télécharger toutes les informations que vous souhaitez conserver.
     </p>

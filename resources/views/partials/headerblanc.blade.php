@@ -123,13 +123,13 @@
                             </div>
                             <div class="de-flex-col">
                                 <div class="menu_side_area">
-                                @guest
+                                   @guest
                                     <!-- Si l'utilisateur n'est pas connecté -->
                                     <a href="{{ route('login') }}" class="btn-main">Connexion</a>
-                                @else
+                                    @else
                                     <!-- Si l'utilisateur est connecté -->
                                     <a href="{{ route('dashboard') }}" class="btn-main">Dashboard</a>
-                                @endauth
+                                    @endauth
                                     <span id="menu-btn"></span>
                                 </div>
                             </div>

@@ -37,12 +37,9 @@ class ReservationController extends Controller
         }
     }
 
-
-
-
-       /**
+    /**
      * Enregistre une nouvelle réservation et initie le paiement
-     */
+    */
     public function store(Request $request)
     {
         Log::info('=== NOUVELLE RÉSERVATION ===', [
@@ -139,9 +136,9 @@ class ReservationController extends Controller
     }
 
 
-     /**
+    /**
      * ✅ CALCUL SERVEUR AUTORITAIRE DES PRIX AVEC RÉDUCTIONS
-     */
+    */
     private function calculateReservationPrice(Car $car, Carbon $startDateTime, Carbon $endDateTime, bool $withDriver): array
     {
         // ⭐ CORRECTION MAJEURE : Calcul du nombre de jours inclusif
@@ -201,9 +198,9 @@ class ReservationController extends Controller
         ];
     }
 
-      /**
+    /**
      * Vérification de disponibilité
-     */
+    */
     private function isCarAvailable(Car $car, Carbon $startDateTime, Carbon $endDateTime): bool
     {
         return !$car->reservations()
@@ -215,9 +212,9 @@ class ReservationController extends Controller
             ->exists();
     }
 
-     /**
+    /**
      * Création de la réservation avec tous les calculs
-     */
+    */
     private function createReservation(array $validatedData, Car $car, Carbon $startDateTime, Carbon $endDateTime, array $priceCalculation): Reservation
     {
         $reservation = new Reservation();
@@ -254,8 +251,8 @@ class ReservationController extends Controller
         return $reservation;
     }
 
-       /**  * ✅ CRÉATION TRANSACTION FEDAPAY AVEC MONTANT CORRECT
-     */
+    /**  * ✅ CRÉATION TRANSACTION FEDAPAY AVEC MONTANT CORRECT
+    */
     private function createFedaPayTransaction(Reservation $reservation, Request $request, Car $car)
     {
         $secretKey = config('services.fedapay.secret_key');
@@ -367,9 +364,9 @@ class ReservationController extends Controller
         }
     }
 
-      /**
+    /**
      * Gestion des erreurs
-     */
+    */
     private function handleError(Request $request, string $message)
     {
         if ($request->ajax()) {
@@ -426,9 +423,9 @@ class ReservationController extends Controller
         }
     }
 
-/**
- * Affiche la liste des réservations de l'utilisateur
- */
+    /**
+     * Affiche la liste des réservations de l'utilisateur
+    */
     public function index()
     {
         $user = Auth::user();

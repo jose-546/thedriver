@@ -279,7 +279,7 @@
     .status-badge {
         display: inline-flex;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: 0.2rem 1rem;
         border-radius: 9999px;
         font-size: 0.75rem;
         font-weight: 600;
@@ -288,7 +288,7 @@
     }
 
     .status-active {
-        background-color: #28a745;
+        background-color: #198754;
         color: white;
     }
 
@@ -442,7 +442,7 @@
     }
 
     .countdown-timer.text-green {
-        color: #28a745;
+        color: #198754;
     }
 
     /* Actions des réservations */
@@ -670,13 +670,15 @@
                                     </li>
 
                                     <li>
-                                        <form method="POST" action="{{ route('logout') }}">
+                                        <a href="{{ route('logout') }}" 
+                                        onclick="event.preventDefault(); this.nextElementSibling.submit();">
+                                            <i class="fa fa-sign-out"></i> Déconnexion
+                                        </a>
+                                        <form method="POST" action="{{ route('logout') }}" style="display: none;">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="fa fa-sign-out"></i> Déconnexion
-                                            </button>
                                         </form>
                                     </li>
+
                                 </ul>
 
                             </div>
@@ -903,68 +905,72 @@
                                     ->get();
                             @endphp
 
-                            @if($recentReservations->count() > 0)
-                                    <h4>Mes réservations récentes</h4>
-                                    @foreach($recentReservations as $reservation)
-                                        @php
-                                            // Calculer le statut basé uniquement sur les dates
-                                            $now = now();
-                                            $startDateTime = $reservation->getStartDateTime();
-                                            $endDateTime = $reservation->getEndDateTime();
-                                            $detailedStatus = [];
-                                            
-                                            if ($endDateTime <= $now) {
-                                                // Réservation expirée
-                                                $detailedStatus = [
-                                                    'status' => 'expired',
-                                                    'label' => 'Expiré',
-                                                    'color' => 'red'
-                                                ];
-                                            }
-                                            elseif ($startDateTime > $now) {
-                                                // Réservation programmée (pas encore commencée)
-                                                $detailedStatus = [
-                                                    'status' => 'scheduled',
-                                                    'label' => 'Programmé',
-                                                    'color' => 'blue'
-                                                ];
-                                            }
-                                            else {
-                                                // Réservation en cours
-                                                $detailedStatus = [
-                                                    'status' => 'active',
-                                                    'label' => 'En cours',
-                                                    'color' => 'green'
-                                                ];
-                                            }
-                                        @endphp
-                                    <table class="table de-table">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Véhicule</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">N° Plaque</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Jours</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Début</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Fin</span></th>
-                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                        <td><span class="d-lg-none d-sm-block">Véhicule</span><div class="hb1 bg-gray-100 text-dark">{{ $reservation->car->name }} {{ $reservation->car->model }}</div></td>
-                                        <td><span class="d-lg-none d-sm-block">N° Plaque</span><span class="bold"></span>{{ $reservation->car->license_plate }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Jours</span>{{ $reservation->total_days}} Jours</td>
-                                        <td><span class="d-lg-none d-sm-block">Montant</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
-                                        <td><span class="d-lg-none d-sm-block">Début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><span class="d-lg-none d-sm-block">Fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
-                                        <td><div class="badge rounded-pill bg-{{ $detailedStatus['status'] }}">{{ $detailedStatus['label'] }}</div></td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                    @endforeach
-                                </div>
-                            @endif
+                                            @if($recentReservations->count() > 0)
+                                            <h4>Mes réservations récentes</h4>
+                                            <table class="table de-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Véhicule</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">N° Plaque</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Jours</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Montant</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Début</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Fin</span></th>
+                                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($recentReservations as $reservation)
+                                                        @php
+                                                            $now = now();
+                                                            $startDateTime = $reservation->getStartDateTime();
+                                                            $endDateTime = $reservation->getEndDateTime();
+                                                            
+                                                            if ($endDateTime <= $now) {
+                                                                $detailedStatus = [
+                                                                    'status' => 'expired',
+                                                                    'label' => 'Expiré',
+                                                                    'color' => 'danger' // Bootstrap utilise bg-danger
+                                                                ];
+                                                            }
+                                                            elseif ($startDateTime > $now) {
+                                                                $detailedStatus = [
+                                                                    'status' => 'scheduled',
+                                                                    'label' => 'Programmé',
+                                                                    'color' => 'primary' // bg-primary
+                                                                ];
+                                                            }
+                                                            else {
+                                                                $detailedStatus = [
+                                                                    'status' => 'active',
+                                                                    'label' => 'En cours',
+                                                                    'color' => 'success' // bg-success
+                                                                ];
+                                                            }
+                                                        @endphp
+                                                        <tr>
+                                                            <td>
+                                                                <span class="d-lg-none d-sm-block">Véhicule</span>
+                                                                <div class="hb1 bg-gray-100 text-dark">
+                                                                    {{ $reservation->car->name }} {{ $reservation->car->model }}
+                                                                </div>
+                                                            </td>
+                                                            <td><span class="d-lg-none d-sm-block">N° Plaque</span>{{ $reservation->car->license_plate }}</td>
+                                                            <td><span class="d-lg-none d-sm-block">Jours</span>{{ $reservation->total_days }} Jours</td>
+                                                            <td><span class="d-lg-none d-sm-block">Montant</span>{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</td>
+                                                            <td><span class="d-lg-none d-sm-block">Début</span>{{ $startDateTime->format('d/m/Y H:i') }}</td>
+                                                            <td><span class="d-lg-none d-sm-block">Fin</span>{{ $endDateTime->format('d/m/Y H:i') }}</td>
+                                                            <td>
+                                                                <div class="badge rounded-pill bg-{{ $detailedStatus['color'] }}">
+                                                                    {{ $detailedStatus['label'] }}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
+
 
                             @if($recentReservations->count() == 0)
                                 <div class="section-card">

@@ -124,11 +124,11 @@
                             <div class="de-flex-col">
                                 <div class="menu_side_area">
                                     @guest
-                                        <!-- Si l'utilisateur n'est pas connecté -->
-                                        <a href="{{ route('login') }}" class="btn-main">Connexion</a>
+                                    <!-- Si l'utilisateur n'est pas connecté -->
+                                    <a href="{{ route('login') }}" class="btn-main">Connexion</a>
                                     @else
-                                        <!-- Si l'utilisateur est connecté -->
-                                        <a href="{{ route('dashboard') }}" class="btn-main">Dashboard</a>
+                                    <!-- Si l'utilisateur est connecté -->
+                                    <a href="{{ route('dashboard') }}" class="btn-main">Dashboard</a>
                                     @endauth
                                     <span id="menu-btn"></span>
                                 </div>

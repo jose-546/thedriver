@@ -54,7 +54,7 @@
 
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Enregister</button>
+    <button type="submit" class="btn-main">Enregister</button>
 
     @if (session('status') === 'password-updated')
         <p class="text-success mt-2">Mot de passe enregistré.</p>

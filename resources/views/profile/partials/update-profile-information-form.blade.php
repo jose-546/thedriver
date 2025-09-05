@@ -15,6 +15,7 @@
                     name="name" 
                     id="username" 
                     class="form-control" 
+                    style="font-size:14px;" 
                     placeholder="Entrez votre nom"
                     value="{{ old('name', $user->name) }}"
                     required
@@ -31,6 +32,7 @@
                     name="email" 
                     id="email_address" 
                     class="form-control" 
+                    style="font-size:14px;" 
                     placeholder="Entrez l'email"
                     value="{{ old('email', $user->email) }}"
                     required
@@ -60,7 +62,7 @@
             </div>
         @endif
 
-        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+        <button type="submit" class="btn-main">Enregistrer</button>
 
         @if (session('status') === 'profile-updated')
             <p class="text-sm text-gray-600 mt-2">{{ __('Saved.') }}</p>
