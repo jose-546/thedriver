@@ -241,10 +241,21 @@
                                     <span class="badge bg-success">
                                         <i class="bi bi-check-circle"></i> Active
                                     </span>
-                                    @php
-                                        $endDateTime = \Carbon\Carbon::parse($reservation->reservation_end_date . ' ' . ($reservation->reservation_end_time ?? '23:59:59'));
+                                @php
+                                    try {
+                                        // Gérer le cas où reservation_end_time pourrait contenir une date complète
+                                        $timeString = $reservation->reservation_end_time;
+                                        if ($timeString && strlen($timeString) > 8) {
+                                            // Si c'est une datetime complète, extraire seulement l'heure
+                                            $timeString = \Carbon\Carbon::parse($timeString)->format('H:i:s');
+                                        }
+                                        $endDateTime = \Carbon\Carbon::parse($reservation->reservation_end_date . ' ' . ($timeString ?? '23:59:59'));
                                         $isExpired = $endDateTime->isPast();
-                                    @endphp
+                                    } catch (\Exception $e) {
+                                        // En cas d'erreur, considérer comme non expiré
+                                        $isExpired = false;
+                                    }
+                                @endphp
                                     @if($isExpired)
                                         <br><span class="badge bg-warning">Expirée</span>
                                     @endif
@@ -269,13 +280,21 @@
                                         <i class="bi bi-eye"></i>
                                     </a>
                                     
-                                    @php
-                                        $canMarkCompleted = false;
-                                        if($reservation->status === 'active') {
-                                            $endDateTime = \Carbon\Carbon::parse($reservation->reservation_end_date . ' ' . ($reservation->reservation_end_time ?? '23:59:59'));
+                               @php
+                                    $canMarkCompleted = false;
+                                    if($reservation->status === 'active') {
+                                        try {
+                                            $timeString = $reservation->reservation_end_time;
+                                            if ($timeString && strlen($timeString) > 8) {
+                                                $timeString = \Carbon\Carbon::parse($timeString)->format('H:i:s');
+                                            }
+                                            $endDateTime = \Carbon\Carbon::parse($reservation->reservation_end_date . ' ' . ($timeString ?? '23:59:59'));
                                             $canMarkCompleted = $endDateTime->isPast();
+                                        } catch (\Exception $e) {
+                                            $canMarkCompleted = false;
                                         }
-                                    @endphp
+                                    }
+                                @endphp
                                     
                                     @if($canMarkCompleted)
                                         <button class="btn btn-sm btn-outline-success" 

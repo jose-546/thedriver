@@ -95,7 +95,7 @@
         .tabs-container {
             background: white;
             border-radius: var(--border-radius-large);
-           
+            box-shadow: var(--shadow-soft);
             overflow: hidden;
             border: 1px solid var(--border-light);
         }
@@ -175,7 +175,6 @@
         /* Table Styles */
         .responsive-table {
             overflow-x: auto;
-            
         }
 
         .reservations-table {
@@ -188,8 +187,8 @@
         }
 
         .reservations-table th {
-            
-            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
             text-align: left;
             font-weight: 600;
             color: var(--text-dark);
@@ -588,30 +587,26 @@
 
                                 <div class="tabs-container">
                                     <div class="tabs-nav">
-                                        <button class="tab-btn active" data-tab="active">
-                                            
+                                        <button class="tab-btn active" data-tab="tab-active">
                                             <span>En Cours</span>
                                             <span class="tab-count">{{ $activeReservations->count() }}</span>
                                         </button>
-                                        <button class="tab-btn" data-tab="scheduled">
-                                            
+                                        <button class="tab-btn" data-tab="tab-scheduled">
                                             <span>Programmées</span>
-                                            <span class="tab-count">{{ $activeReservations->count() }}</span>
+                                            <span class="tab-count">{{ $scheduledReservations->count() }}</span>
                                         </button>
-                                        <button class="tab-btn" data-tab="pending">
-                                            
+                                        <button class="tab-btn" data-tab="tab-expired">
                                             <span>Expirées</span>
                                             <span class="tab-count">{{ $expiredReservations->count() }}</span>
                                         </button>
-                                        <button class="tab-btn" data-tab="expired">
-                                            
+                                        <button class="tab-btn" data-tab="tab-cancelled">
                                             <span>Annulées</span>
                                             <span class="tab-count">{{ $cancelledReservations->count() }}</span>
                                         </button>
                                     </div>
 
                                     {{-- Onglet Réservations En Cours --}}
-                                    <div class="tab-content active" id="active">
+                                    <div class="tab-content active" id="tab-active">
                                         @if($activeReservations->count() > 0)
                                             <div class="responsive-table">
                                                 <table class="reservations-table">
@@ -630,7 +625,11 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="car-info">
-                                                                    
+                                                                    @if($reservation->car->image)
+                                                                        <img src="{{ asset('storage/' . $reservation->car->image) }}" alt="{{ $reservation->car->getFullName() }}" class="car-image">
+                                                                    @else
+                                                                        <img src="https://via.placeholder.com/70x52/e9ecef/495057?text=Car" alt="Voiture" class="car-image">
+                                                                    @endif
                                                                     <div class="car-details">
                                                                         <h4>{{ $reservation->car->getFullName() }}</h4>
                                                                         <p>
@@ -691,7 +690,7 @@
                                     </div>
 
                                     {{-- Onglet Réservations Programmées --}}
-                                    <div class="tab-content" id="scheduled">
+                                    <div class="tab-content" id="tab-scheduled">
                                         @if($scheduledReservations->count() > 0)
                                             <div class="responsive-table">
                                                 <table class="reservations-table">
@@ -782,7 +781,7 @@
                                     </div>
 
                                     {{-- Onglet Réservations Expirées --}}
-                                    <div class="tab-content" id="expired">
+                                    <div class="tab-content" id="tab-expired">
                                         @if($expiredReservations->count() > 0)
                                             <div class="responsive-table">
                                                 <table class="reservations-table">
@@ -857,7 +856,7 @@
                                     </div>
 
                                     {{-- Onglet Réservations Annulées --}}
-                                    <div class="tab-content" id="cancelled">
+                                    <div class="tab-content" id="tab-cancelled">
                                         @if($cancelledReservations->count() > 0)
                                             <div class="responsive-table">
                                                 <table class="reservations-table">
@@ -876,8 +875,11 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="car-info">
-                                                                    <img src="{{ $reservation->car->image_url ?? 'https://via.placeholder.com/60x45' }}" 
-                                                                        alt="{{ $reservation->car->getFullName() }}" class="car-image">
+                                                                    @if($reservation->car->image)
+                                                                        <img src="{{ asset('storage/' . $reservation->car->image) }}" alt="{{ $reservation->car->getFullName() }}" class="car-image">
+                                                                    @else
+                                                                        <img src="https://via.placeholder.com/70x52/e9ecef/495057?text=Car" alt="Voiture" class="car-image">
+                                                                    @endif
                                                                     <div class="car-details">
                                                                         <h4>{{ $reservation->car->getFullName() }}</h4>
                                                                         <p>
@@ -900,7 +902,8 @@
                                                                 <span class="status-badge status-cancelled">Annulée</span>
                                                             </td>
                                                             <td>
-                                                                <div class="price">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</div>@if($reservation->discount_percentage > 0)
+                                                                <div class="price">{{ number_format($reservation->final_total, 0, ',', ' ') }} FCFA</div>
+                                                                @if($reservation->discount_percentage > 0)
                                                                     <small style="color: #6c757d;">{{ $reservation->discount_percentage }}% de réduction</small>
                                                                 @else
                                                                     <small style="color: #6c757d;">Aucune réduction</small>
@@ -964,16 +967,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Gestion des onglets
+            // Gestion des onglets - VERSION CORRIGÉE
             document.querySelectorAll('.tab-btn').forEach(button => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', function() {
+                    console.log('Clic sur tab:', this.dataset.tab); // Pour débugger
+                    
                     // Retirer la classe active de tous les boutons et contenus
                     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
                     
-                    // Ajouter la classe active au bouton cliqué et au contenu correspondant
-                    button.classList.add('active');
-                    document.getElementById(button.dataset.tab).classList.add('active');
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+                    
+                    // Ajouter la classe active au contenu correspondant
+                    const targetTab = document.getElementById(this.dataset.tab);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                        console.log('Tab activé:', this.dataset.tab); // Pour débugger
+                    } else {
+                        console.error('Tab non trouvé:', this.dataset.tab); // Pour débugger
+                    }
                 });
             });
 
@@ -1032,39 +1045,6 @@
             updateCountdowns();
             setInterval(updateCountdowns, 60000);
         });
-
-        // Mise à jour des comptes à rebours pour les réservations programmées
-        function updateStartCountdowns() {
-            document.querySelectorAll('.countdown-start').forEach(countdown => {
-                const startDate = countdown.dataset.start;
-                if (!startDate) return;
-
-                const start = new Date(startDate).getTime();
-                const now = new Date().getTime();
-                const distance = start - now;
-
-                if (distance < 0) {
-                    countdown.innerHTML = 'Commencée';
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                if (days > 0) {
-                    countdown.innerHTML = ${days}j ${hours}h ${minutes}m;
-                } else if (hours > 0) {
-                    countdown.innerHTML = ${hours}h ${minutes}m;
-                } else {
-                    countdown.innerHTML = ${minutes}m;
-                }
-            });
-        }
-
-        // Ajoutez cet appel dans votre script existant
-        updateStartCountdowns();
-        setInterval(updateStartCountdowns, 60000);
     </script>
 </body>
 
